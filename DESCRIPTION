@@ -1,0 +1,14 @@
+Package: YoloBypassSBM
+Type: Package
+Title: Yolo Bypass Salmon Benefits Model
+Version: 0.1.0
+Author: Travis Hinkelman
+Maintainer: Travis Hinkelman <travis.hinkelman@fishsciences.net>
+Description: Simulates benefits of the Yolo Bypass to outmigrating Juvenile Chinook Salmon.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    VGAM
+RoxygenNote: 7.0.2
+Suggests: tinytest
