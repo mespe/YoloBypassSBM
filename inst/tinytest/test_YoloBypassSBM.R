@@ -40,6 +40,10 @@ expect_true(rs2 > 0.064 && rs2 < 0.065)
 set.seed(89)
 os1 <- ocean_survival(70)
 expect_true(os1 > 0.00035 && os1 < 0.00036)
+os2 <- ocean_survival(100, FALSE)
+expect_true(os2 > 0.005671 && os2 < 0.005672)
+os3 <- ocean_survival(30, FALSE)
+expect_true(os3 > 0.00112 && os3 < 0.00113)
 
 # entrainment ----------------------------------------------------------
 
