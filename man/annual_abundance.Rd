@@ -4,14 +4,16 @@
 \name{annual_abundance}
 \alias{annual_abundance}
 \title{Annual abundance of outmigrants}
-\format{A data frame with 15 rows and 5 columns:
+\format{
+A data frame with 15 rows and 5 columns:
 \describe{
   \item{WaterYear}{defined as Oct 1st to Sept 30th}
   \item{Winter}{winter-run annual abundance}
   \item{Spring}{spring-run annual abundance}
   \item{Fall}{fall-run annual abundance}
   \item{LateFall}{late-fall-run annual abundance}
-}}
+}
+}
 \usage{
 annual_abundance
 }

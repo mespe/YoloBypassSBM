@@ -4,11 +4,13 @@
 \name{fremont_weir_proportion}
 \alias{fremont_weir_proportion}
 \title{Proportion of fish entrained onto the Yolo Bypass at Fremont Weir}
-\format{A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+\format{
+A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
 \describe{
   \item{Date}{calendar date}
   \item{Proportion}{predicted proportion of fish entering the Yolo Bypass}
-}}
+}
+}
 \usage{
 fremont_weir_proportion
 }

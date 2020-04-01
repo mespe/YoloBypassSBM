@@ -4,10 +4,12 @@
 \alias{ocean_survival}
 \title{Draw number of adults returning from ocean}
 \usage{
-ocean_survival(fork_length)
+ocean_survival(fork_length, sim_type = c("deterministic", "stochastic"))
 }
 \arguments{
 \item{fork_length}{Fork length (mm) at estuary entry (Chipps Island)}
+
+\item{sim_type}{Simulation type: deterministic or stochastic}
 }
 \description{
 Draw a random number of adults returning from ocean after 3 years based on fork length

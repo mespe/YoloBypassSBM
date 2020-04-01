@@ -4,12 +4,14 @@
 \name{knights_landing_fl_params}
 \alias{knights_landing_fl_params}
 \title{Knights Landing fork length parameters}
-\format{A list comprised of 4 lists (one for each run: Fall, LateFall, Spring, Winter) that contain 3 vectors (Date, MeanLog, SDLog) of 5382 elements:
+\format{
+A list comprised of 4 lists (one for each run: Fall, LateFall, Spring, Winter) that contain 3 vectors (Date, MeanLog, SDLog) of 5382 elements:
 \describe{
   \item{Date}{calendar date}
   \item{MeanLog}{meanlog parameter of lognormal distribution}
   \item{SDLog}{sdlog parameter of lognormal distribution}
-}}
+}
+}
 \usage{
 knights_landing_fl_params
 }
