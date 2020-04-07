@@ -14,6 +14,6 @@
 ocean_survival <- function(fork_length, sim_type = c("deterministic", "stochastic")){
   sim_type <- match.arg(sim_type)
   stand_dev <- if (sim_type == "stochastic") 1.430318 else 0
-  x <- exp(rnorm(n = 1, mean = -7.489501 + 0.023172 * fork_length, sd = stand_dev))
+  x <- sapply(fork_length, function (fl) exp(rnorm(n = 1, mean = -7.489501 + 0.023172 * fl, sd = stand_dev)))
   ifelse(x < 0, 0, ifelse(x > 1, 1, x))
 }
