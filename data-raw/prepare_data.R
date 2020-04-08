@@ -35,6 +35,11 @@ cohort_data_template <- list(Run = NA_character_,
                              Sac = route_list)
 usethis::use_data(cohort_data_template, overwrite = TRUE)
 
+# Telemetry model parameters ----------------------------------------------
+
+telemetry_parameters <- readRDS("data-raw/TelemetryModelParameters.rds")
+usethis::use_data(telemetry_parameters, overwrite = TRUE)
+
 # Annual abundance ----------------------------------------------
 
 annual_abundance <- read_csv("data-raw/AnnualAbundance.csv") %>%
