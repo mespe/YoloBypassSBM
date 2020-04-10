@@ -49,3 +49,8 @@ expect_true(os3 > 0.00112 && os3 < 0.00113)
 
 set.seed(816)
 expect_equal(entrainment("Exg", 500, 1000), c(Yolo = 778, Sac = 222))
+
+# inv_logit ----------------------------------------------------------
+
+expect_equal(inv_logit(-Inf), 0)
+expect_equal(inv_logit(Inf), 1)

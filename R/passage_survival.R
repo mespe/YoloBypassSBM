@@ -23,12 +23,6 @@ passage_survival <- function(fork_length, flow, cohort_abundance, route = c("Sac
   route <- match.arg(route)
   sim_type <- match.arg(sim_type)
 
-  inv_logit = function (x) {
-    p = 1/(1 + exp(-x))
-    p[is.infinite(p)] = 1
-    p
-  }
-
   # fork_length and flow were centered in telemetry model
   fork_length = fork_length - params[["mean_fl"]]
   flow = flow - params[["mean_flow"]]
