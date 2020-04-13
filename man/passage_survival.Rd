@@ -7,7 +7,7 @@
 passage_survival(
   fork_length,
   flow,
-  cohort_abundance,
+  abundance,
   route = c("Sac", "Yolo"),
   sim_type = c("deterministic", "stochastic"),
   params = telemetry_parameters
@@ -18,7 +18,7 @@ passage_survival(
 
 \item{flow}{Flow (cfs) at Freeport on day route entered}
 
-\item{cohort_abundance}{Abundance of cohort on day route entered}
+\item{abundance}{Abundance of cohort on day route entered}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
 

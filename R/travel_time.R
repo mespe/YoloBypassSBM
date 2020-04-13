@@ -16,25 +16,25 @@
 
 travel_time <- function(fork_length, flow, route = c("Sac", "Yolo"),
                            sim_type = c("deterministic", "stochastic"), params = telemetry_parameters){
-
-  if(length(fork_length) != length(flow))
-    stop("fork_lengths and flow must be the same length")
   route <- match.arg(route)
   sim_type <- match.arg(sim_type)
 
-  # fork_length and flow were centered in telemetry model
-  fork_length = fork_length - params[["mean_fl"]]
-  flow = flow - params[["mean_flow"]]
+  if(length(fork_length) != length(flow))
+    stop("fork_lengths and flow must be the same length")
 
-  travel_time_mu = params[["alpha_travel"]] + params[["beta_travel[1]"]] * fork_length +
+  # fork_length and flow were centered in telemetry model
+  fork_length <- fork_length - params[["mean_fl"]]
+  flow <- flow - params[["mean_flow"]]
+
+  travel_time_mu <- params[["alpha_travel"]] + params[["beta_travel[1]"]] * fork_length +
     params[["beta_travel[2]"]] * flow + params[["beta_travel[3]"]] * as.integer(route == "Yolo")
 
-  stand_dev <- if (sim_type == "stochastic") params[["sigma_travel"]] else 0
+ if (sim_type == "stochastic")
+   travel_time_mu <- sapply(travel_time_mu, function(x) rnorm(1, x, params[["sigma_travel"]]))
 
-  travel_time = sapply(travel_time_mu, function(x)
-    exp(rnorm(1, x, stand_dev)))
+  travel_time <- exp(travel_time_mu)
 
-  ifelse(travel_time < 0, 0, travel_time)
+  ifelse(travel_time < 0, 0, travel_time) # small chance that travel time could be negative
 }
 
 # # library(tidyverse)

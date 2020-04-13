@@ -40,6 +40,13 @@ usethis::use_data(cohort_data_template, overwrite = TRUE)
 telemetry_parameters <- readRDS("data-raw/TelemetryModelParameters.rds")
 usethis::use_data(telemetry_parameters, overwrite = TRUE)
 
+# Rearing survival parameters ----------------------------------------------
+
+# default value of daily rearing survival (under deterministic simulation) and
+# lower and upper limits of uniform distribution of daily survival values
+rearing_survival_parameters <- c("survival" = 0.97, "min" = 0.95, "max" = 0.99)
+usethis::use_data(rearing_survival_parameters, overwrite = TRUE)
+
 # Annual abundance ----------------------------------------------
 
 annual_abundance <- read_csv("data-raw/AnnualAbundance.csv") %>%
@@ -54,14 +61,15 @@ klt_raw <- read_excel("data-raw/KnightsLandingCPUE.xlsx")
 
 knights_landing_timing <- klt_raw %>%
   select(Date = DATE, paste("DAILY", c("FRC", "SRC", "WRC", "LFRC"), "%")) %>%
-  gather(key = RunCode, value = Prop, `DAILY FRC %`:`DAILY LFRC %`) %>%
+  gather(key = RunCode, value = Percent, `DAILY FRC %`:`DAILY LFRC %`) %>%
   left_join(tibble(RunCode = paste("DAILY", c("FRC", "SRC", "WRC", "LFRC"), "%"),
                    Run = c("Fall", "Spring", "Winter", "LateFall"))) %>%
   full_join(tibble(Date = seq(from = min(klt_raw$DATE, na.rm = TRUE),
                               to = max(klt_raw$DATE, na.rm = TRUE),
                               by = "days"))) %>%
   mutate(WaterYear = water_year(Date),
-         Run = ifelse(is.na(Run), "Drop", Run)) %>%
+         Run = ifelse(is.na(Run), "Drop", Run),
+         Prop = Percent/100) %>%
   select(Run, Date, WaterYear, Prop) %>%
   spread(key = Run, value = Prop) %>%
   arrange(Date) %>%

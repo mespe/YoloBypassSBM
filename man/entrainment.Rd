@@ -2,20 +2,26 @@
 % Please edit documentation in R/entrainment.R
 \name{entrainment}
 \alias{entrainment}
-\title{Number of fish entrained at Fremont Weir}
+\title{Fish entrainment at Fremont Weir}
 \usage{
 entrainment(
-  scenario = c("Exg", "Alt01", "Alt04b", "Alt04", "Alt05", "Alt06"),
   model_day,
-  abundance
+  abundance,
+  scenario = c("Exg", "Alt01", "Alt04b", "Alt04", "Alt05", "Alt06"),
+  sim_type = c("deterministic", "stochastic"),
+  proportion_list = fremont_weir_proportion
 )
 }
 \arguments{
-\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
-
 \item{model_day}{Day that cohort reaches Fremont Weir}
 
 \item{abundance}{Abundance of cohort at Fremont Weir}
+
+\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
+
+\item{sim_type}{Simulation type: deterministic or stochastic}
+
+\item{proportion_list}{Proportion entrained at Fremont Weir on each day for each scenario}
 }
 \description{
 Draw random number of fish entrained at Fremont Weir based on scenario, model day, and abundance at Fremont Weir

@@ -4,17 +4,23 @@
 \alias{rearing_survival}
 \title{Draw rearing survival}
 \usage{
-rearing_survival(rearing_time, min, max)
+rearing_survival(
+  rearing_time,
+  sim_type = c("deterministic", "stochastic"),
+  params = rearing_survival_parameters
+)
 }
 \arguments{
 \item{rearing_time}{Number of days spent rearing}
 
-\item{min, max}{Lower and upper limits of uniform distribution of daily survival values}
+\item{sim_type}{Simulation type: deterministic or stochastic}
+
+\item{params}{Rearing survival parameters}
 }
 \description{
 Draw a random rearing survival based on rearing time and daily survival
 }
 \examples{
-rearing_survival(10, 0.95, 0.999)
+rearing_survival(10)
 
 }

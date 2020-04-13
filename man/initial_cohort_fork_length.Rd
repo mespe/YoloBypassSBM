@@ -5,14 +5,20 @@
 \title{Draw initial cohort fork length}
 \usage{
 initial_cohort_fork_length(
+  model_day,
   run = c("Fall", "LateFall", "Winter", "Spring"),
-  model_day
+  sim_type = c("deterministic", "stochastic"),
+  params = knights_landing_fl_params
 )
 }
 \arguments{
+\item{model_day}{Day that cohort enters the model}
+
 \item{run}{Run timing classification: Fall, LateFall, Winter, Spring}
 
-\item{model_day}{Day that cohort enters the model}
+\item{sim_type}{Simulation type: deterministic or stochastic}
+
+\item{params}{Knights Landing fork length parameters}
 }
 \description{
 Draw initial cohort for fork length based on run timing and model day

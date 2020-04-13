@@ -13,7 +13,13 @@
 
 ocean_survival <- function(fork_length, sim_type = c("deterministic", "stochastic")){
   sim_type <- match.arg(sim_type)
-  stand_dev <- if (sim_type == "stochastic") 1.430318 else 0
-  x <- sapply(fork_length, function (fl) exp(rnorm(n = 1, mean = -7.489501 + 0.023172 * fl, sd = stand_dev)))
-  ifelse(x < 0, 0, ifelse(x > 1, 1, x))
+
+  os_mean <- -7.489501 + 0.023172 * fork_length
+
+  if (sim_type == "stochastic") {
+    survival <- sapply(fork_length, function (fl) exp(rnorm(n = 1, mean = os_mean, sd = 1.430318)))
+  } else {
+    survival <- exp(os_mean)
+  }
+  ifelse(survival < 0, 0, ifelse(survival > 1, 1, survival))
 }

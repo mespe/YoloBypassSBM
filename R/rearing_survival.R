@@ -4,16 +4,22 @@
 #'
 #' @md
 #' @param rearing_time  Number of days spent rearing
-#' @param min,max       Lower and upper limits of uniform distribution of daily survival values
+#' @param sim_type      Simulation type: deterministic or stochastic
+#' @param params        Rearing survival parameters
 #'
 #' @export
 #' @examples
-#' rearing_survival(10, 0.95, 0.999)
+#' rearing_survival(10)
 #'
 
-rearing_survival <- function(rearing_time, min, max){
-  # simplest possible version for now
-  # would like to incorporate seasonality and possible size/stage effects
-  # this formulation converts daily survival to instantaneous survival
-  exp(log(runif(1, min, max))*rearing_time)
+rearing_survival <- function(rearing_time, sim_type = c("deterministic", "stochastic"),
+                             params = rearing_survival_parameters){
+  sim_type <- match.arg(sim_type)
+
+  if (sim_type == "stochastic") {
+    daily_survival <- runif(length(rearing_time), params[["min"]], params[["max"]])
+  } else {
+    daily_survival <- params[["survival"]]
+  }
+  exp(log(daily_survival)*rearing_time)
 }

@@ -5,14 +5,23 @@
 \title{Draw initial cohort abundance}
 \usage{
 initial_cohort_abundance(
+  water_year,
   run = c("Fall", "LateFall", "Winter", "Spring"),
-  water_year
+  sim_type = c("deterministic", "stochastic"),
+  timing_df = knights_landing_timing,
+  abundance_df = annual_abundance
 )
 }
 \arguments{
+\item{water_year}{Water year 1997-2011}
+
 \item{run}{Run timing classification: Fall, LateFall, Winter, Spring}
 
-\item{water_year}{Water year 1997-2011}
+\item{sim_type}{Simulation type: deterministic or stochastic}
+
+\item{timing_df}{Knights Landing entry timing}
+
+\item{abundance_df}{Annual abundance of outmigrants}
 }
 \description{
 Draw a random vector of initial cohort abundances based on run timing, water year, and annual abundance
