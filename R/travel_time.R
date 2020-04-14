@@ -37,28 +37,5 @@ travel_time <- function(fork_length, flow, route = c("Sac", "Yolo"),
   ifelse(travel_time < 0, 0, travel_time) # small chance that travel time could be negative
 }
 
-# # library(tidyverse)
-# crossing(FL = c(40, 80, 120, 160, 200),
-#          Flow = seq(10000, 120000, 10000)) %>%
-#   mutate(Sac = travel_time(FL, Flow, "Sac"),
-#          Yolo = travel_time(FL, Flow, "Yolo")) %>%
-#   gather(key = Route, value = TravelTime, Sac:Yolo) %>%
-#   ggplot(aes(x = Flow, y = TravelTime, col = as.factor(FL))) +
-#   geom_line() +
-#   scale_color_brewer(name = "FL", type = "qual", palette = "Set1") +
-#   facet_wrap(~Route) +
-#   theme_minimal()
-# ggsave("TravelTimeVsFLAndFlow.png", width = 6, height = 3.5)
-#
-# crossing(FL = c(40, 80, 120, 160, 200),
-#          Flow = seq(10000, 120000, 10000)) %>%
-#   mutate(Sac = travel_time(FL, Flow, "Sac", "stochastic"),
-#          Yolo = travel_time(FL, Flow, "Yolo", "stochastic")) %>%
-#   gather(key = Route, value = TravelTime, Sac:Yolo) %>%
-#   ggplot(aes(x = Flow, y = TravelTime, col = as.factor(FL))) +
-#   geom_point() +
-#   scale_color_brewer(name = "FL", type = "qual", palette = "Set1") +
-#   facet_wrap(~Route) +
-#   theme_minimal()
 
 

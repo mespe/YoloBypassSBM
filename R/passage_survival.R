@@ -30,10 +30,10 @@ passage_survival <- function(fork_length, flow, abundance, route = c("Sac", "Yol
   fork_length = fork_length - params[["mean_fl"]]
   flow = flow - params[["mean_flow"]]
 
-  survival = inv_logit(params[["alpha_survival"]] +
-                         params[["beta_survival[1]"]] * fork_length +
-                         params[["beta_survival[2]"]] * flow +
-                         params[["beta_survival[3]"]] * as.integer(route == "Yolo"))
+  survival <- inv_logit(params[["alpha_survival"]] +
+                          params[["beta_survival[1]"]] * fork_length +
+                          params[["beta_survival[2]"]] * flow +
+                          params[["beta_survival[3]"]] * as.integer(route == "Yolo"))
 
   abundance <- round(abundance)
   if (sim_type == "stochastic") {
@@ -42,30 +42,3 @@ passage_survival <- function(fork_length, flow, abundance, route = c("Sac", "Yol
   }
   survival
 }
-
-# library(tidyverse)
-# crossing(FL = c(40, 80, 120, 160, 200),
-#          Flow = seq(10000, 120000, 10000)) %>%
-#   mutate(CohortAbundance = 100000,
-#          Sac = passage_survival(FL, Flow, CohortAbundance, "Sac"),
-#          Yolo = passage_survival(FL, Flow, CohortAbundance, "Yolo")) %>%
-#   gather(key = Route, value = Survival, Sac:Yolo) %>%
-#   ggplot(aes(x = Flow, y = Survival, col = as.factor(FL))) +
-#   geom_line() +
-#   scale_color_brewer(name = "FL", type = "qual", palette = "Set1") +
-#   facet_wrap(~Route) +
-#   theme_minimal()
-# ggsave("SurvivalVsFLAndFlow.png", width = 6, height = 3.5)
-#
-#
-# crossing(FL = c(40, 80, 120, 160, 200),
-#          Flow = seq(10000, 120000, 10000)) %>%
-#   mutate(CohortAbundance = 100000,
-#          Sac = passage_survival(FL, Flow, CohortAbundance, "Sac", "stochastic"),
-#          Yolo = passage_survival(FL, Flow, CohortAbundance, "Yolo", "stochastic")) %>%
-#   gather(key = Route, value = Survival, Sac:Yolo) %>%
-#   ggplot(aes(x = Flow, y = Survival, col = as.factor(FL))) +
-#   geom_point() +
-#   scale_color_brewer(name = "FL", type = "qual", palette = "Set1") +
-#   facet_wrap(~Route) +
-#   theme_minimal()
