@@ -2,7 +2,7 @@
 % Please edit documentation in R/initial_cohort_abundance.R
 \name{initial_cohort_abundance}
 \alias{initial_cohort_abundance}
-\title{Draw initial cohort abundance}
+\title{Initial cohort abundance}
 \usage{
 initial_cohort_abundance(
   water_year,
@@ -24,7 +24,7 @@ initial_cohort_abundance(
 \item{abundance_df}{Annual abundance of outmigrants}
 }
 \description{
-Draw a random vector of initial cohort abundances based on run timing, water year, and annual abundance
+Initial cohort abundances based on run timing, water year, and annual abundance
 }
 \examples{
 

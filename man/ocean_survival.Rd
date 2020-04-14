@@ -2,7 +2,7 @@
 % Please edit documentation in R/ocean_survival.R
 \name{ocean_survival}
 \alias{ocean_survival}
-\title{Draw number of adults returning from ocean}
+\title{Number of adults returning from ocean}
 \usage{
 ocean_survival(fork_length, sim_type = c("deterministic", "stochastic"))
 }
@@ -12,7 +12,7 @@ ocean_survival(fork_length, sim_type = c("deterministic", "stochastic"))
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }
 \description{
-Draw a random number of adults returning from ocean after 3 years based on fork length
+Number of adults returning from ocean after three years based on fork length
 }
 \examples{
 ocean_survival(100)

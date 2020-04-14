@@ -2,7 +2,7 @@
 % Please edit documentation in R/travel_time.R
 \name{travel_time}
 \alias{travel_time}
-\title{Draw travel time from Fremont Weir to Chipps}
+\title{Travel time from Fremont Weir to Chipps}
 \usage{
 travel_time(
   fork_length,
@@ -13,7 +13,7 @@ travel_time(
 )
 }
 \arguments{
-\item{fork_length}{Fork length (mm) at estuary entry (Chipps Island)}
+\item{fork_length}{Fork length (mm) at Fremont Weir}
 
 \item{flow}{Flow (cfs) at Freeport on day route entered}
 
@@ -22,7 +22,7 @@ travel_time(
 \item{params}{Parameters from Bayesian model of survival and travel time based on acoustic telemetry data}
 }
 \description{
-Draw a random travel time (days) from Fremont Weir to Chipps Island based on fork length, flow, and route
+Travel time (days) from Fremont Weir to Chipps Island based on fork length, flow, and route
 }
 \examples{
 travel_time(70, 60000, "Sac")

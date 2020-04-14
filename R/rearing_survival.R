@@ -1,6 +1,6 @@
-#' Draw rearing survival
+#' Rearing survival
 #'
-#' Draw a random rearing survival based on rearing time and daily survival
+#' Rearing survival based on rearing time and daily survival
 #'
 #' @md
 #' @param rearing_time  Number of days spent rearing

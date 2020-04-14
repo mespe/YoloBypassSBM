@@ -1,9 +1,9 @@
-#' Draw travel time from Fremont Weir to Chipps
+#' Travel time from Fremont Weir to Chipps
 #'
-#' Draw a random travel time (days) from Fremont Weir to Chipps Island based on fork length, flow, and route
+#' Travel time (days) from Fremont Weir to Chipps Island based on fork length, flow, and route
 #'
 #' @md
-#' @param fork_length   Fork length (mm) at estuary entry (Chipps Island)
+#' @param fork_length   Fork length (mm) at Fremont Weir
 #' @param flow          Flow (cfs) at Freeport on day route entered
 #' @param sim_type      Simulation type: deterministic or stochastic
 #' @param params        Parameters from Bayesian model of survival and travel time based on acoustic telemetry data

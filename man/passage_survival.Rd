@@ -2,7 +2,7 @@
 % Please edit documentation in R/passage_survival.R
 \name{passage_survival}
 \alias{passage_survival}
-\title{Draw passage survival from Fremont Weir to Chipps}
+\title{Passage survival from Fremont Weir to Chipps Island}
 \usage{
 passage_survival(
   fork_length,
@@ -14,7 +14,7 @@ passage_survival(
 )
 }
 \arguments{
-\item{fork_length}{Fork length (mm) at estuary entry (Chipps Island)}
+\item{fork_length}{Fork length (mm) at Fremont Weir}
 
 \item{flow}{Flow (cfs) at Freeport on day route entered}
 
@@ -25,7 +25,7 @@ passage_survival(
 \item{params}{Parameters from Bayesian model of survival and travel time based on acoustic telemetry data}
 }
 \description{
-Draw a random passage survival from Fremont Weir to Chipps Island based on fork length, flow, and route
+Passage survival from Fremont Weir to Chipps Island based on fork length, flow, and route
 }
 \examples{
 passage_survival(70, 60000, 100000, "Sac")

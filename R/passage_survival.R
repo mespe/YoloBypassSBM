@@ -1,9 +1,9 @@
-#' Draw passage survival from Fremont Weir to Chipps
+#' Passage survival from Fremont Weir to Chipps Island
 #'
-#' Draw a random passage survival from Fremont Weir to Chipps Island based on fork length, flow, and route
+#' Passage survival from Fremont Weir to Chipps Island based on fork length, flow, and route
 #'
 #' @md
-#' @param fork_length   Fork length (mm) at estuary entry (Chipps Island)
+#' @param fork_length   Fork length (mm) at Fremont Weir
 #' @param flow          Flow (cfs) at Freeport on day route entered
 #' @param abundance     Abundance of cohort on day route entered
 #' @param sim_type      Simulation type: deterministic or stochastic

@@ -1,6 +1,6 @@
-#' Draw number of adults returning from ocean
+#' Number of adults returning from ocean
 #'
-#' Draw a random number of adults returning from ocean after 3 years based on fork length
+#' Number of adults returning from ocean after three years based on fork length
 #'
 #' @md
 #' @param fork_length   Fork length (mm) at estuary entry (Chipps Island)

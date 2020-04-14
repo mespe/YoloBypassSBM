@@ -47,6 +47,12 @@ usethis::use_data(telemetry_parameters, overwrite = TRUE)
 rearing_survival_parameters <- c("survival" = 0.97, "min" = 0.95, "max" = 0.99)
 usethis::use_data(rearing_survival_parameters, overwrite = TRUE)
 
+# Rearing probability ----------------------------------------------
+
+rearing_probability_parameters <- c("min" = 0, "max" = 1,
+                                    "inflection" = 80, "steepness" = 5)
+usethis::use_data(rearing_probability_parameters, overwrite = TRUE)
+
 # Annual abundance ----------------------------------------------
 
 annual_abundance <- read_csv("data-raw/AnnualAbundance.csv") %>%

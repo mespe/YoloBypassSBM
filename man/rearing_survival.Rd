@@ -2,7 +2,7 @@
 % Please edit documentation in R/rearing_survival.R
 \name{rearing_survival}
 \alias{rearing_survival}
-\title{Draw rearing survival}
+\title{Rearing survival}
 \usage{
 rearing_survival(
   rearing_time,
@@ -18,7 +18,7 @@ rearing_survival(
 \item{params}{Rearing survival parameters}
 }
 \description{
-Draw a random rearing survival based on rearing time and daily survival
+Rearing survival based on rearing time and daily survival
 }
 \examples{
 rearing_survival(10)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/initial_cohort_fork_length.R
 \name{initial_cohort_fork_length}
 \alias{initial_cohort_fork_length}
-\title{Draw initial cohort fork length}
+\title{Initial cohort fork length}
 \usage{
 initial_cohort_fork_length(
   model_day,
@@ -21,5 +21,5 @@ initial_cohort_fork_length(
 \item{params}{Knights Landing fork length parameters}
 }
 \description{
-Draw initial cohort for fork length based on run timing and model day
+Initial cohort fork length based on run timing and model day
 }

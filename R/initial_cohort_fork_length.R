@@ -1,6 +1,6 @@
-#' Draw initial cohort fork length
+#' Initial cohort fork length
 #'
-#' Draw initial cohort for fork length based on run timing and model day
+#' Initial cohort fork length based on run timing and model day
 #'
 #' @md
 #' @param model_day     Day that cohort enters the model

@@ -1,6 +1,6 @@
-#' Draw initial cohort abundance
+#' Initial cohort abundance
 #'
-#' Draw a random vector of initial cohort abundances based on run timing, water year, and annual abundance
+#' Initial cohort abundances based on run timing, water year, and annual abundance
 #'
 #' @md
 #' @param water_year    Water year 1997-2011

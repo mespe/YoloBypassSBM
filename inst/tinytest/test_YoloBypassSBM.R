@@ -24,6 +24,16 @@ expect_equal(sum(initial_cohort_abundance(2002, "Winter")),
 expect_equal(sum(initial_cohort_abundance(2003, "Spring")),
              annual_abundance[["Spring"]][annual_abundance[["WaterYear"]] == 2003])
 
+# rearing ----------------------------------------------------------
+
+expect_equal(round(rearing_probability(40), 2), 0.97)
+expect_equal(rearing_probability(80), 0.5)
+expect_equal(round(rearing_probability(120), 2), 0.12)
+
+expect_equal(round(mean(rearing_status(rep(40, 1e5))), 2), 0.97)
+expect_equal(round(mean(rearing_status(rep(80, 1e5))), 2), 0.50)
+expect_equal(round(mean(rearing_status(rep(120, 1e5))), 2), 0.12)
+
 # survival ----------------------------------------------------------
 
 # rearing
@@ -48,13 +58,6 @@ expect_equal(round(passage_survival(70, 30000, 100000, "Yolo"), 3), 0.203)
 
 expect_equal(round(travel_time(70, 60000, "Sac"), 1), 4.6)
 expect_equal(round(travel_time(70, 60000, "Yolo"), 1), 6.6)
-
-# entrainment ----------------------------------------------------------
-
-ent_exg_80 <- entrainment(80, 1000, "Exg")
-expect_equal(ent_exg_80$Yolo + ent_exg_80$Sac, 1000)
-ent_alt6_80 <- entrainment(80, 1000, "Alt06")
-expect_equal(ent_alt6_80$Yolo + ent_alt6_80$Sac, 1000)
 
 # inv_logit ----------------------------------------------------------
 
