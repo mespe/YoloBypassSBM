@@ -23,9 +23,6 @@ entrainment <- function(model_day, abundance,
   if(length(model_day) != length(abundance))
     stop("model_day and abundance must be the same length")
 
-  if (length(scenario) > 1 || length(sim_type) > 1)
-    stop("scenario and sim_type must have length = 1")
-
   proportion <- proportion_list[[scenario]][["Value"]][model_day]
 
   if (sim_type == "stochastic") {

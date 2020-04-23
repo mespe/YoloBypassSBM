@@ -1,3 +1,8 @@
+## Started out with good intentions of having good test coverage
+## but writing tests slipped to a lower priority
+## also, because many of the functions are just looking up data,
+## the tests are not robust to changes in the underlying data
+
 # dates ----------------------------------------------------------
 
 expect_equal(get_water_year(c(1, 365, 730)), c(1997, 1998, 1999))
@@ -50,11 +55,6 @@ expect_equal(round(mean(rearing_status(rep(120, 1e5), "stochastic")), 2), 0.12)
 expect_equal(round(rearing_survival(1), 2), 0.97)
 expect_equal(round(rearing_survival(10), 2), 0.74)
 expect_equal(round(rearing_survival(20), 2), 0.54)
-
-# ocean
-expect_equal(round(ocean_survival(30), 4), 0.0011)
-expect_equal(round(ocean_survival(70), 4), 0.0028)
-expect_equal(round(ocean_survival(100), 4), 0.0057)
 
 # passage
 expect_equal(round(passage_survival(70, 60000, 100000, "Sac"), 3), 0.490)

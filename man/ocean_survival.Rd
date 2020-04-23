@@ -4,17 +4,26 @@
 \alias{ocean_survival}
 \title{Number of adults returning from ocean}
 \usage{
-ocean_survival(fork_length, sim_type = c("deterministic", "stochastic"))
+ocean_survival(
+  mass,
+  abundance,
+  sim_type = c("deterministic", "stochastic"),
+  params = ocean_survival_parameters
+)
 }
 \arguments{
-\item{fork_length}{Fork length (mm) at estuary entry (Chipps Island)}
+\item{mass}{Average mass (g) of cohort at estuary entry (Chipps Island)}
+
+\item{abundance}{Abundance of cohort at esturary entry}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
+
+\item{params}{Parameters from betabinomial regression of ocean recoveries versus release weight}
 }
 \description{
-Number of adults returning from ocean after three years based on fork length
+Number of adults returning from ocean after three years based on mass
 }
 \examples{
-ocean_survival(100)
+ocean_survival(40, 1000)
 
 }

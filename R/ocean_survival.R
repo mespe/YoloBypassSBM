@@ -1,25 +1,32 @@
 #' Number of adults returning from ocean
 #'
-#' Number of adults returning from ocean after three years based on fork length
+#' Number of adults returning from ocean after three years based on mass
 #'
 #' @md
-#' @param fork_length   Fork length (mm) at estuary entry (Chipps Island)
+#' @param mass          Average mass (g) of cohort at estuary entry (Chipps Island)
+#' @param abundance     Abundance of cohort at esturary entry
 #' @param sim_type      Simulation type: deterministic or stochastic
+#' @param params        Parameters from betabinomial regression of ocean recoveries versus release weight
 #'
 #' @export
 #' @examples
-#' ocean_survival(100)
+#' ocean_survival(40, 1000)
 #'
 
-ocean_survival <- function(fork_length, sim_type = c("deterministic", "stochastic")){
+ocean_survival <- function(mass, abundance, sim_type = c("deterministic", "stochastic"),
+                           params = ocean_survival_parameters){
   sim_type <- match.arg(sim_type)
 
-  os_mean <- -7.489501 + 0.023172 * fork_length
+  if(length(mass) != length(abundance))
+    stop("mass and abundance must be the same length")
+
+  survival <- inv_logit(params[["inter"]] + params[["slope"]] * mass)
 
   if (sim_type == "stochastic") {
-    survival <- sapply(fork_length, function (fl) exp(rnorm(n = 1, mean = os_mean, sd = 1.430318)))
+    returning_adults <- mapply(function(abun, surv) VGAM::rbetabinom(1, size = abun, prob = surv, rho = params[["phi"]]),
+                               round(abundance), survival)
   } else {
-    survival <- exp(os_mean)
+    returning_adults <- survival * abundance
   }
-  ifelse(survival < 0, 0, ifelse(survival > 1, 1, survival))
+  returning_adults
 }

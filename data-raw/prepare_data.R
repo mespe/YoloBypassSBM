@@ -35,6 +35,12 @@ cohort_data_template <- list(Run = NA_character_,
                              Sac = route_list)
 usethis::use_data(cohort_data_template, overwrite = TRUE)
 
+
+# Ocean return parameters ----------------------------------------------
+
+ocean_survival_parameters <- readRDS("data-raw/OceanSurvivalParameters.rds")
+usethis::use_data(ocean_survival_parameters, overwrite = TRUE)
+
 # Telemetry model parameters ----------------------------------------------
 
 telemetry_parameters <- readRDS("data-raw/TelemetryModelParameters.rds")
@@ -46,6 +52,17 @@ usethis::use_data(telemetry_parameters, overwrite = TRUE)
 # lower and upper limits of uniform distribution of daily survival values
 rearing_survival_parameters <- c("survival" = 0.97, "min" = 0.95, "max" = 0.99)
 usethis::use_data(rearing_survival_parameters, overwrite = TRUE)
+
+# Floodplain growth parameters ----------------------------------------------
+# from Perry et al 2015
+# b = allometric growth exponent
+# d and g = shape parameters of the Ratkowsky model
+# TL = lower temperature limit for growth
+# TU = upper temperature limit for growth
+
+floodplain_growth_parameters <- c("b" = 0.338, "d" = 0.415, "g" = 0.315,
+                                  "TL" = 1.833, "TU" = 24.918)
+usethis::use_data(floodplain_growth_parameters, overwrite = TRUE)
 
 # Rearing probability ----------------------------------------------
 

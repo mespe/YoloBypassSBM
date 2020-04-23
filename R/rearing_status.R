@@ -16,8 +16,6 @@
 rearing_status <- function(fork_length, sim_type = c("deterministic", "stochastic")){
   sim_type <- match.arg(sim_type)
 
-  if (length(sim_type) > 1) stop("sim_type must have length = 1")
-
   if (sim_type == "stochastic") {
     status <- sapply(rearing_probability(fork_length),
                      function(x) rbinom(n = 1, size = 1, prob = x))
