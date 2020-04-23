@@ -26,7 +26,7 @@ entrainment <- function(model_day, abundance,
   if (length(scenario) > 1 || length(sim_type) > 1)
     stop("scenario and sim_type must have length = 1")
 
-  proportion <- proportion_list[[scenario]][["Proportion"]][model_day]
+  proportion <- proportion_list[[scenario]][["Value"]][model_day]
 
   if (sim_type == "stochastic") {
     entrained <- mapply(function(abun, prop) rbinom(n = 1, size = abun, prob = prop),

@@ -61,6 +61,18 @@ annual_abundance <- read_csv("data-raw/AnnualAbundance.csv") %>%
   spread(key = Run, value = Abundance)
 usethis::use_data(annual_abundance, overwrite = TRUE)
 
+# Floodplain temperature ----------------------------------------------
+
+td <- readRDS("data-raw/ToeDrainTemp.rds") %>%
+  left_join(readRDS("data-raw/FloodplainTemperatureDifference.rds"), by = c("doy" = "DOY")) %>%
+  mutate(fp_temp = temp + Diff) %>%
+  arrange(date)
+
+floodplain_temperature <- list(Date = td$date,
+                               Value = td$fp_temp)
+
+usethis::use_data(floodplain_temperature, overwrite = TRUE)
+
 # Entry timing ----------------------------------------------
 
 klt_raw <- read_excel("data-raw/KnightsLandingCPUE.xlsx")
@@ -149,21 +161,21 @@ for (i in unique(timing_fl$Run)){
 }
 usethis::use_data(knights_landing_fl_params, overwrite = TRUE)
 
-# Proportion entrained at Fremont Weir
+# Freeport flow and Proportion entrained at Fremont Weir ----------------------------------------------
 
 flow_files <- list.files(path = "data-raw", pattern = "Flow", full.names = TRUE)
 fremont_weir_proportion <- list()
+freeport_flow <- list()
 for (i in flow_files){
   scenario <-  gsub("data-raw/", "", gsub("Flow.csv", "", i))
   temp <- read_csv(i)
   fremont_weir_proportion[[scenario]] <- list(Date = temp$Date,
-                                              Proportion = temp$PropFremont)
+                                              Value = temp$PropFremont)
+  freeport_flow[[scenario]] <- list(Date = temp$Date,
+                                    Value = temp$Freeport)
 }
 usethis::use_data(fremont_weir_proportion, overwrite = TRUE)
+usethis::use_data(freeport_flow, overwrite = TRUE)
 
-
-# Suitable habitat ----------------------------------------------
-
-# need to decide how these data will be used in package (e.g., running average) before adding to package
 
 

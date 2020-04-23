@@ -8,7 +8,7 @@
 A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
 \describe{
   \item{Date}{calendar date}
-  \item{Proportion}{predicted proportion of fish entering the Yolo Bypass}
+  \item{Value}{proportion of fish entering the Yolo Bypass}
 }
 }
 \usage{

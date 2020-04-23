@@ -40,6 +40,18 @@
 #'
 "cohort_data_template"
 
+#' Floodplain temperature
+#'
+#' A dataset containing the predicted temperature on the Yolo Bypass floodplain
+#'
+#' @format A list of 2 vectors of 5477 elements:
+#' \describe{
+#'   \item{Date}{calendar date}
+#'   \item{Value}{mean daily temperature (ºC)}
+#' }
+#'
+"floodplain_temperature"
+
 #' Proportion of fish entrained onto the Yolo Bypass at Fremont Weir
 #'
 #' A dataset containing the predicted proportion of fish entering the Yolo Bypass
@@ -48,10 +60,22 @@
 #' @format A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
 #' \describe{
 #'   \item{Date}{calendar date}
-#'   \item{Proportion}{predicted proportion of fish entering the Yolo Bypass}
+#'   \item{Value}{proportion of fish entering the Yolo Bypass}
 #' }
 #'
 "fremont_weir_proportion"
+
+#' Freeport Flow
+#'
+#' A dataset containing the modeled flow at Freeport.
+#'
+#' @format A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+#' \describe{
+#'   \item{Date}{calendar date}
+#'   \item{Value}{flow (cfs) at Freeport}
+#' }
+#'
+"freeport_flow"
 
 #' Knights Landing fork length parameters
 #'

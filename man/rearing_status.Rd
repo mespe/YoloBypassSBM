@@ -4,13 +4,16 @@
 \alias{rearing_status}
 \title{Rearing status}
 \usage{
-rearing_status(fork_length)
+rearing_status(fork_length, sim_type = c("deterministic", "stochastic"))
 }
 \arguments{
 \item{fork_length}{Fork length (mm) at Fremont Weir}
+
+\item{sim_type}{Simulation type: deterministic or stochastic}
 }
 \description{
-Rearing status for cohorts on the Yolo Bypass (0 = not rearing; 1 = rearing); note: no deterministic option
+Rearing status for cohorts on the Yolo Bypass (0 = not rearing; 1 = rearing);
+deterministic option is a crude approximation of underlying relationship
 }
 \examples{
 rearing_status(70)

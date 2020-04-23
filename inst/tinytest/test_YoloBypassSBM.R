@@ -24,15 +24,25 @@ expect_equal(sum(initial_cohort_abundance(2002, "Winter")),
 expect_equal(sum(initial_cohort_abundance(2003, "Spring")),
              annual_abundance[["Spring"]][annual_abundance[["WaterYear"]] == 2003])
 
+# entrainment ----------------------------------------------------------
+
+expect_equal(sum(unlist(entrainment(100, 1000, "Exg"))), 1000)
+expect_equal(sum(unlist(entrainment(100, 10000, "Exg"))), 10000)
+expect_equal(round(entrainment(120, 10000, "Exg")$Yolo), 8735)
+expect_equal(round(entrainment(120, 10000, "Exg")$Sac), 1265)
+
 # rearing ----------------------------------------------------------
 
 expect_equal(round(rearing_probability(40), 2), 0.97)
 expect_equal(rearing_probability(80), 0.5)
 expect_equal(round(rearing_probability(120), 2), 0.12)
 
-expect_equal(round(mean(rearing_status(rep(40, 1e5))), 2), 0.97)
-expect_equal(round(mean(rearing_status(rep(80, 1e5))), 2), 0.50)
-expect_equal(round(mean(rearing_status(rep(120, 1e5))), 2), 0.12)
+expect_equal(rearing_status(80), 1)
+expect_equal(rearing_status(81), 0)
+
+expect_equal(round(mean(rearing_status(rep(40, 1e5), "stochastic")), 2), 0.97)
+expect_equal(round(mean(rearing_status(rep(80, 1e5), "stochastic")), 2), 0.50)
+expect_equal(round(mean(rearing_status(rep(120, 1e5), "stochastic")), 2), 0.12)
 
 # survival ----------------------------------------------------------
 
