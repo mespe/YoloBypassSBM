@@ -5,14 +5,14 @@
 \title{Number of adults returning from ocean}
 \usage{
 ocean_survival(
-  mass,
+  wet_weight,
   abundance,
   sim_type = c("deterministic", "stochastic"),
   params = ocean_survival_parameters
 )
 }
 \arguments{
-\item{mass}{Average mass (g) of cohort at estuary entry (Chipps Island)}
+\item{wet_weight}{Average wet weight (g) of cohort at estuary entry (Chipps Island)}
 
 \item{abundance}{Abundance of cohort at esturary entry}
 
@@ -21,7 +21,7 @@ ocean_survival(
 \item{params}{Parameters from betabinomial regression of ocean recoveries versus release weight}
 }
 \description{
-Number of adults returning from ocean after three years based on mass
+Number of adults returning from ocean after three years based on weight
 }
 \examples{
 ocean_survival(40, 1000)

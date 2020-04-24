@@ -35,6 +35,11 @@ cohort_data_template <- list(Run = NA_character_,
                              Sac = route_list)
 usethis::use_data(cohort_data_template, overwrite = TRUE)
 
+# Length-weight parameters ----------------------------------------------
+# Tiffan et al 2014
+
+length_weight_parameters <- c("a" = 0.000004, "b" = 3.2252)
+usethis::use_data(length_weight_parameters, overwrite = TRUE)
 
 # Ocean return parameters ----------------------------------------------
 

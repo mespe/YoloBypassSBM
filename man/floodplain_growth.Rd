@@ -4,10 +4,15 @@
 \alias{floodplain_growth}
 \title{Floodplain growth}
 \usage{
-floodplain_growth(mass, temp, duration, params = floodplain_growth_parameters)
+floodplain_growth(
+  wet_weight,
+  temp,
+  duration,
+  params = floodplain_growth_parameters
+)
 }
 \arguments{
-\item{mass}{Mass (g) at start of rearing period}
+\item{wet_weight}{Wet weight (g) at start of rearing period}
 
 \item{temp}{Mean temperature (ºC) during the rearing period}
 
@@ -16,7 +21,7 @@ floodplain_growth(mass, temp, duration, params = floodplain_growth_parameters)
 \item{params}{Parameters for the Ratkowsky growth model}
 }
 \description{
-Returns final mass given initial mass and mean temperture during growth period; uses parameters from Perry et al. 2015
+Returns final wet_weight given initial wet_weight and mean temperture during growth period; uses parameters from Perry et al. 2015
 }
 \examples{
 floodplain_growth(10, 2, 20)
