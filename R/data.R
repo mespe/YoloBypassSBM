@@ -65,6 +65,18 @@
 #'
 "fremont_weir_proportion"
 
+#' Flood duration
+#'
+#' Number of days where inundation area throughout the Yolo Bypass is above 142.5 sq. km in a window of 120 days from the date that cohort entered the Yolo Bypass
+#'
+#' @format A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+#' \describe{
+#'   \item{Date}{calendar date}
+#'   \item{Value}{flood duration (days)}
+#' }
+#'
+"flood_duration"
+
 #' Freeport Flow
 #'
 #' A dataset containing the modeled flow at Freeport.

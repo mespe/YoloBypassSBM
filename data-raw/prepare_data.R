@@ -51,6 +51,11 @@ usethis::use_data(ocean_survival_parameters, overwrite = TRUE)
 telemetry_parameters <- readRDS("data-raw/TelemetryModelParameters.rds")
 usethis::use_data(telemetry_parameters, overwrite = TRUE)
 
+# Rearing time parameters ----------------------------------------------
+
+rearing_time_parameters <- readRDS("data-raw/RearingTimeParameters.rds")
+usethis::use_data(rearing_time_parameters, overwrite = TRUE)
+
 # Rearing survival parameters ----------------------------------------------
 
 # default value of daily rearing survival (under deterministic simulation) and
@@ -82,6 +87,11 @@ annual_abundance <- read_csv("data-raw/AnnualAbundance.csv") %>%
   mutate(Abundance = round(Abundance)) %>%
   spread(key = Run, value = Abundance)
 usethis::use_data(annual_abundance, overwrite = TRUE)
+
+# Flood duration ----------------------------------------------
+
+flood_duration <- readRDS("data-raw/FloodDuration.rds")
+usethis::use_data(flood_duration, overwrite = TRUE)
 
 # Floodplain temperature ----------------------------------------------
 
