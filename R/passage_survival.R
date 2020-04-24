@@ -20,11 +20,8 @@ passage_survival <- function(fork_length, flow, abundance, route = c("Sac", "Yol
   route <- match.arg(route)
   sim_type <- match.arg(sim_type)
 
-  if(length(fork_length) != length(flow))
-    stop("fork_length and flow must be the same length")
-
-  if (length(route) > 1 || length(sim_type) > 1)
-    stop("route and sim_type must have length = 1")
+  if(length(fork_length) != length(flow) || length(flow) != length(abundance))
+    stop("fork_length, flow, and abundance must be the same length")
 
   # fork_length and flow were centered in telemetry model
   fork_length = fork_length - params[["mean_fl"]]
@@ -35,10 +32,11 @@ passage_survival <- function(fork_length, flow, abundance, route = c("Sac", "Yol
                           params[["beta_survival[2]"]] * flow +
                           params[["beta_survival[3]"]] * as.integer(route == "Yolo"))
 
-  abundance <- round(abundance)
   if (sim_type == "stochastic") {
-    survival <- sapply(survival, function(x)
-      rbinom(n = 1, size = abundance, prob = x)/abundance)
+    chipps_num <- mapply(function(abun, surv) rbinom(n = 1, size = abun, prob = surv),
+                               round(abundance), survival)
+  } else {
+    chipps_num <- survival * abundance
   }
-  survival
+  chipps_num
 }

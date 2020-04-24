@@ -14,8 +14,7 @@
 #' @export
 #'
 
-entrainment <- function(model_day, abundance,
-                        scenario = c("Exg", "Alt01", "Alt04b", "Alt04", "Alt05", "Alt06"),
+entrainment <- function(model_day, abundance, scenario = c("Exg", "Alt01", "Alt04b", "Alt04", "Alt05", "Alt06"),
                         sim_type = c("deterministic", "stochastic"), proportion_list = fremont_weir_proportion){
   sim_type <- match.arg(sim_type)
   scenario <- match.arg(scenario)

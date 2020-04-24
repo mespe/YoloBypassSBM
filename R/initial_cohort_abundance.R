@@ -19,13 +19,12 @@ initial_cohort_abundance <- function(water_year, run = c("Fall", "LateFall", "Wi
   run <- match.arg(run)
   sim_type <- match.arg(sim_type)
 
-  wy <- abundance_df[["WaterYear"]]
+  if (length(water_year) > 1)
+    stop("water_year must have length = 1")
 
-  if (!(water_year %in% wy))
-    stop(paste("water_year must be between", min(wy), "and", max(wy)))
-
-  if (length(water_year) > 1 || length(run) > 1 || length(sim_type) > 1)
-    stop("water_year, run, and sim_type must have length = 1")
+  wy_all <- abundance_df[["WaterYear"]]
+  if (!(water_year %in% wy_all))
+    stop(paste("water_year must be between", min(wy_all), "and", max(wy_all)))
 
   abun <- abundance_df[[run]][abundance_df[["WaterYear"]] == water_year]
   prop <- timing_df[[run]][timing_df[["WaterYear"]] == water_year]

@@ -17,9 +17,6 @@ initial_cohort_fork_length <- function(model_day, run = c("Fall", "LateFall", "W
   run <- match.arg(run)
   sim_type <- match.arg(sim_type)
 
-  if (length(run) > 1 || length(sim_type) > 1)
-    stop("run and sim_type must have length = 1")
-
   if (sim_type == "stochastic") {
     fork_length <- mapply(function(fl, sd) rlnorm(1, fl, sd),
                          params[[run]][["MeanLog"]][model_day],

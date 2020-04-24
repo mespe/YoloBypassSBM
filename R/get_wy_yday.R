@@ -15,9 +15,6 @@ get_wy_yday <- function(model_day){
   if (any(model_day > 5382)) stop("model_day is outside range of data")
 
   wy_yday <- function(x){
-    is_leap_year <- function(year){
-      (year %% 4 == 0) & ((year %% 100 != 0) | (year %% 400 == 0))
-    }
     x_lt <- as.POSIXlt(x)
     x_lt$yday + ifelse(x_lt$mon + 1L < 10L, 93,
                        ifelse(is_leap_year(x_lt$year), -273, -272))
