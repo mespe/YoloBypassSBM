@@ -4,24 +4,18 @@
 \alias{rearing_time_max}
 \title{Maximum floodplain rearing time}
 \usage{
-rearing_time_max(
-  flood_duration,
-  sim_type = c("deterministic", "stochastic"),
-  params = rearing_time_parameters
-)
+rearing_time_max(flood_duration, sim_type)
 }
 \arguments{
 \item{flood_duration}{Flood duration (days)}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
-
-\item{params}{Parameters from negative binomial regression of rearing time versus flood duration}
 }
 \description{
 Maximum floodplain rearing time before adjusting for fish size and temperature
 }
 \examples{
-rearing_time_max(10)
-rearing_time_max(30)
+rearing_time_max(10, "deterministic")
+rearing_time_max(30, "deterministic")
 
 }

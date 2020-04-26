@@ -4,23 +4,17 @@
 \alias{rearing_survival}
 \title{Rearing survival}
 \usage{
-rearing_survival(
-  rearing_time,
-  sim_type = c("deterministic", "stochastic"),
-  params = rearing_survival_parameters
-)
+rearing_survival(rearing_time, sim_type)
 }
 \arguments{
 \item{rearing_time}{Number of days spent rearing}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
-
-\item{params}{Rearing survival parameters}
 }
 \description{
 Rearing survival based on rearing time and daily survival
 }
 \examples{
-rearing_survival(10)
+rearing_survival(10, "deterministic")
 
 }

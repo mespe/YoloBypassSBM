@@ -5,7 +5,6 @@
 #'
 #' @md
 #' @param fork_length   Fork length (mm) at Fremont Weir
-#' @param params        Parameters for four-parameter logistic function
 #'
 #' @export
 #' @examples
@@ -13,7 +12,8 @@
 #' rearing_time_proportion(150)
 #'
 
-rearing_time_proportion <- function(fork_length, params = rearing_probability_parameters){
-  params[["min"]] + (params[["max"]] - params[["min"]])/(1 + (fork_length / params[["inflection"]])^params[["steepness"]])
+rearing_time_proportion <- function(fork_length){
+  p <- rearing_probability_parameters
+  p[["min"]] + (p[["max"]] - p[["min"]])/(1 + (fork_length / p[["inflection"]])^p[["steepness"]])
 }
 

@@ -4,31 +4,24 @@
 \alias{passage_survival}
 \title{Passage survival from Fremont Weir to Chipps Island}
 \usage{
-passage_survival(
-  fork_length,
-  flow,
-  abundance,
-  route = c("Sac", "Yolo"),
-  sim_type = c("deterministic", "stochastic"),
-  params = telemetry_parameters
-)
+passage_survival(abundance, fork_length, flow, route, sim_type)
 }
 \arguments{
+\item{abundance}{Abundance of cohort on day route entered}
+
 \item{fork_length}{Fork length (mm) at Fremont Weir}
 
 \item{flow}{Flow (cfs) at Freeport on day route entered}
 
-\item{abundance}{Abundance of cohort on day route entered}
+\item{route}{Route: Sacramento River (Sac) or Yolo Bypass (Yolo)}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
-
-\item{params}{Parameters from Bayesian model of survival and travel time based on acoustic telemetry data}
 }
 \description{
 Passage survival from Fremont Weir to Chipps Island based on fork length, flow, and route
 }
 \examples{
-passage_survival(70, 60000, 100000, "Sac")
-passage_survival(70, 60000, 100000, "Yolo")
+passage_survival(1000, 70, 60000, "Sac", "deterministic")
+passage_survival(1000, 70, 60000, "Yolo", "deterministic")
 
 }

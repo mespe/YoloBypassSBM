@@ -1,28 +1,25 @@
 #' Initial cohort fork length
 #'
-#' Initial cohort fork length based on run timing and model day
+#' Initial cohort fork length based on model day and Chinook run
 #'
 #' @md
 #' @param model_day     Day that cohort enters the model
-#' @param run           Run timing classification: Fall, LateFall, Winter, Spring
+#' @param chinook_run   Run timing classification: Fall, LateFall, Winter, Spring
 #' @param sim_type      Simulation type: deterministic or stochastic
-#' @param params        Knights Landing fork length parameters
-#'
 #'
 #' @export
 #'
 
-initial_cohort_fork_length <- function(model_day, run = c("Fall", "LateFall", "Winter", "Spring"),
-                                       sim_type = c("deterministic", "stochastic"), params = knights_landing_fl_params){
-  run <- match.arg(run)
-  sim_type <- match.arg(sim_type)
+initial_cohort_fork_length <- function(model_day, chinook_run, sim_type){
+
+  params = knights_landing_fl_params
 
   if (sim_type == "stochastic") {
     fork_length <- mapply(function(fl, sd) rlnorm(1, fl, sd),
-                         params[[run]][["MeanLog"]][model_day],
-                         params[[run]][["SDLog"]][model_day])
+                          params[[chinook_run]][["MeanLog"]][model_day],
+                          params[[chinook_run]][["SDLog"]][model_day])
   } else {
-    fork_length <- exp(params[[run]][["MeanLog"]][model_day])
+    fork_length <- exp(params[[chinook_run]][["MeanLog"]][model_day])
   }
   fork_length
 }

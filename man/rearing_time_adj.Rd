@@ -4,12 +4,7 @@
 \alias{rearing_time_adj}
 \title{Adjusted floodplain rearing time}
 \usage{
-rearing_time_adj(
-  rearing_time_max,
-  wet_weight,
-  model_day,
-  temp_thresh = rearing_time_parameters[["thresh"]]
-)
+rearing_time_adj(rearing_time_max, wet_weight, model_day)
 }
 \arguments{
 \item{rearing_time_max}{Maximum rearing duration (days)}
@@ -17,14 +12,15 @@ rearing_time_adj(
 \item{wet_weight}{Wet weight (g) at start of rearing period}
 
 \item{model_day}{Model day when rearing was initiated}
-
-\item{temp_thresh}{Threshold temperature when cohorts stop rearing}
 }
 \description{
 Floodplain rearing time adjusted for fish size and temperature
 }
 \examples{
-rearing_time_max(10)
-rearing_time_max(30)
+rearing_time_adj(20, 1, 100)
+rearing_time_adj(20, 1, 200)
+rearing_time_adj(20, 1, 210)
+rearing_time_adj(20, 10, 100)
+rearing_time_adj(20, 10, 210)
 
 }

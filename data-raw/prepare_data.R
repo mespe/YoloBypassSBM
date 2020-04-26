@@ -5,35 +5,46 @@ library(readxl)
 library(cfs.misc)
 library(imputeTS)
 
-# Cohort data template ----------------------------------------------
+# # Cohort data template ----------------------------------------------
+#
+# route_list <- list(Abun = list(Fremont = NA_real_,
+#                                Rio = NA_real_,
+#                                Chipps = NA_real_,
+#                                Ocean = NA_real_),
+#                    FL = list(Fremont = NA_real_,
+#                              Rio = NA_real_,
+#                              Chipps = NA_real_),
+#                    Time = list(Knights = NA_real_,
+#                                Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
+#                                Rio = NA_real_),
+#                    Growth = list(Knights = NA_real_,
+#                                  Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
+#                                  Rio = NA_real_),
+#                    Surv = list(Knights = NA_real_,
+#                                Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
+#                                Rio = NA_real_,
+#                                Chipps = NA_real_))
+#
+# cohort_data_template <- list(Run = NA_character_,
+#                              ModelDay = c("Knights" = NA_real_,
+#                                           "Fremont" = NA_real_,
+#                                           "Rio" = NA_real_,
+#                                           "Chipps" = NA_real_),
+#                              Knights = c("Abun" = NA_real_, "FL" = NA_real_),
+#                              Yolo = route_list,
+#                              Sac = route_list)
+# usethis::use_data(cohort_data_template, overwrite = TRUE)
 
-route_list <- list(Abun = list(Fremont = NA_real_,
-                               Rio = NA_real_,
-                               Chipps = NA_real_,
-                               Ocean = NA_real_),
-                   FL = list(Fremont = NA_real_,
-                             Rio = NA_real_,
-                             Chipps = NA_real_),
-                   Time = list(Knights = NA_real_,
-                               Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
-                               Rio = NA_real_),
-                   Growth = list(Knights = NA_real_,
-                                 Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
-                                 Rio = NA_real_),
-                   Surv = list(Knights = NA_real_,
-                               Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
-                               Rio = NA_real_,
-                               Chipps = NA_real_))
+# Simulation parameters ----------------------------------------------
 
-cohort_data_template <- list(Run = NA_character_,
-                             ModelDay = c("Knights" = NA_real_,
-                                          "Fremont" = NA_real_,
-                                          "Rio" = NA_real_,
-                                          "Chipps" = NA_real_),
-                             Knights = c("Abun" = NA_real_, "FL" = NA_real_),
-                             Yolo = route_list,
-                             Sac = route_list)
-usethis::use_data(cohort_data_template, overwrite = TRUE)
+simulation_parameters <- list(name = "demo",
+                              sim_type = "deterministic",
+                              random_seed = 2020,
+                              reps = 1,
+                              water_years = 1997:2011,
+                              chinook_runs = c("Fall", "LateFall", "Spring", "Winter"),
+                              scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"))
+usethis::use_data(simulation_parameters, overwrite = TRUE)
 
 # Length-weight parameters ----------------------------------------------
 # Tiffan et al 2014
@@ -71,7 +82,6 @@ usethis::use_data(rearing_survival_parameters, overwrite = TRUE)
 # d and g = shape parameters of the Ratkowsky model
 # TL = lower temperature limit for growth
 # TU = upper temperature limit for growth
-
 
 growth_parameters <- c("b" = 0.338, "d" = 0.415, "g" = 0.315,
                        "TL" = 1.833, "TU" = 24.918, "thresh" = 22)

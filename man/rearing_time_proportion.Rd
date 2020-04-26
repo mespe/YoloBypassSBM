@@ -4,12 +4,10 @@
 \alias{rearing_time_proportion}
 \title{Rearing time proportion}
 \usage{
-rearing_time_proportion(fork_length, params = rearing_probability_parameters)
+rearing_time_proportion(fork_length)
 }
 \arguments{
 \item{fork_length}{Fork length (mm) at Fremont Weir}
-
-\item{params}{Parameters for four-parameter logistic function}
 }
 \description{
 Proportion of drawn rearing time that cohort \emph{potentially} rears on the Yolo Bypass based on hypothetical logistic function;

@@ -4,28 +4,15 @@
 \alias{initial_cohort_abundance}
 \title{Initial cohort abundance}
 \usage{
-initial_cohort_abundance(
-  water_year,
-  run = c("Fall", "LateFall", "Winter", "Spring"),
-  sim_type = c("deterministic", "stochastic"),
-  timing_df = knights_landing_timing,
-  abundance_df = annual_abundance
-)
+initial_cohort_abundance(water_year, chinook_run, sim_type)
 }
 \arguments{
 \item{water_year}{Water year 1997-2011}
 
-\item{run}{Run timing classification: Fall, LateFall, Winter, Spring}
+\item{chinook_run}{Run timing classification: Fall, LateFall, Winter, Spring}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
-
-\item{timing_df}{Knights Landing entry timing}
-
-\item{abundance_df}{Annual abundance of outmigrants}
 }
 \description{
-Initial cohort abundances based on run timing, water year, and annual abundance
-}
-\examples{
-
+Initial cohort abundances based on water year and Chinook run
 }

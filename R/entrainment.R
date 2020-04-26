@@ -8,25 +8,21 @@
 #' @param abundance        Abundance of cohort at Fremont Weir
 #' @param scenario         Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06
 #' @param sim_type         Simulation type: deterministic or stochastic
-#' @param proportion_list  Proportion entrained at Fremont Weir on each day for each scenario
 #'
 #'
 #' @export
 #'
 
-entrainment <- function(model_day, abundance, scenario = c("Exg", "Alt01", "Alt04b", "Alt04", "Alt05", "Alt06"),
-                        sim_type = c("deterministic", "stochastic"), proportion_list = fremont_weir_proportion){
-  sim_type <- match.arg(sim_type)
-  scenario <- match.arg(scenario)
+entrainment <- function(model_day, abundance, scenario, sim_type){
 
   if(length(model_day) != length(abundance))
     stop("model_day and abundance must be the same length")
 
-  proportion <- proportion_list[[scenario]][["Value"]][model_day]
+  proportion <- fremont_weir_proportion[[scenario]][["Value"]][model_day]
 
   if (sim_type == "stochastic") {
     entrained <- mapply(function(abun, prop) rbinom(n = 1, size = abun, prob = prop),
-                          round(abundance), proportion)
+                        round(abundance), proportion)
   } else {
     entrained <- proportion * abundance
   }

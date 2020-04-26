@@ -4,7 +4,7 @@
 \alias{growth}
 \title{Growth}
 \usage{
-growth(wet_weight, temp, duration, params = growth_parameters)
+growth(wet_weight, temp, duration)
 }
 \arguments{
 \item{wet_weight}{Wet weight (g) at start of rearing period}
@@ -12,8 +12,6 @@ growth(wet_weight, temp, duration, params = growth_parameters)
 \item{temp}{Mean temperature (ºC) during the rearing period}
 
 \item{duration}{Duration (days) of rearing period}
-
-\item{params}{Parameters for the Ratkowsky growth model}
 }
 \description{
 Returns final wet_weight given initial wet_weight and mean temperture during growth period; uses parameters from Perry et al. 2015

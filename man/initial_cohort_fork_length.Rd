@@ -4,22 +4,15 @@
 \alias{initial_cohort_fork_length}
 \title{Initial cohort fork length}
 \usage{
-initial_cohort_fork_length(
-  model_day,
-  run = c("Fall", "LateFall", "Winter", "Spring"),
-  sim_type = c("deterministic", "stochastic"),
-  params = knights_landing_fl_params
-)
+initial_cohort_fork_length(model_day, chinook_run, sim_type)
 }
 \arguments{
 \item{model_day}{Day that cohort enters the model}
 
-\item{run}{Run timing classification: Fall, LateFall, Winter, Spring}
+\item{chinook_run}{Run timing classification: Fall, LateFall, Winter, Spring}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
-
-\item{params}{Knights Landing fork length parameters}
 }
 \description{
-Initial cohort fork length based on run timing and model day
+Initial cohort fork length based on model day and Chinook run
 }

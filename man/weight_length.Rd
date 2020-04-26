@@ -4,11 +4,9 @@
 \alias{weight_length}
 \title{Length-weight relationshiop}
 \usage{
-weight_length(wet_weight, params = length_weight_parameters)
+weight_length(wet_weight)
 }
 \arguments{
-\item{params}{Parameters for length-weight relationship}
-
 \item{fork_length}{Fork length (mm)}
 }
 \description{

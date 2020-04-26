@@ -4,12 +4,7 @@
 \alias{ocean_survival}
 \title{Number of adults returning from ocean}
 \usage{
-ocean_survival(
-  wet_weight,
-  abundance,
-  sim_type = c("deterministic", "stochastic"),
-  params = ocean_survival_parameters
-)
+ocean_survival(wet_weight, abundance, sim_type)
 }
 \arguments{
 \item{wet_weight}{Average wet weight (g) of cohort at estuary entry (Chipps Island)}
@@ -17,8 +12,6 @@ ocean_survival(
 \item{abundance}{Abundance of cohort at esturary entry}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
-
-\item{params}{Parameters from betabinomial regression of ocean recoveries versus release weight}
 }
 \description{
 Number of adults returning from ocean after three years based on weight

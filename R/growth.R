@@ -6,7 +6,6 @@
 #' @param wet_weight    Wet weight (g) at start of rearing period
 #' @param temp          Mean temperature (ºC) during the rearing period
 #' @param duration      Duration (days) of rearing period
-#' @param params        Parameters for the Ratkowsky growth model
 #'
 #' @export
 #' @examples
@@ -14,11 +13,11 @@
 #' growth(10, 20, 20)
 #'
 
-growth <- function(wet_weight, temp, duration, params = growth_parameters){
+growth <- function(wet_weight, temp, duration){
   if(length(wet_weight) != length(temp) || length(temp) != length(duration))
     stop("wet_weight, temp, and duration must be the same length")
 
-  p <- params
+  p <- growth_parameters
   omega <- p[["d"]] * (temp - p[["TL"]]) * (1 - exp(p[["g"]] * (temp - p[["TU"]])))
   (wet_weight^p[["b"]] + (omega * p[["b"]] * duration)/100)^(1/p[["b"]])
 }
