@@ -1,4 +1,4 @@
-#' Floodplain growth
+#' Growth
 #'
 #' Returns final wet_weight given initial wet_weight and mean temperture during growth period; uses parameters from Perry et al. 2015
 #'
@@ -10,11 +10,11 @@
 #'
 #' @export
 #' @examples
-#' floodplain_growth(10, 2, 20)
-#' floodplain_growth(10, 20, 20)
+#' growth(10, 2, 20)
+#' growth(10, 20, 20)
 #'
 
-floodplain_growth <- function(wet_weight, temp, duration, params = floodplain_growth_parameters){
+growth <- function(wet_weight, temp, duration, params = growth_parameters){
   if(length(wet_weight) != length(temp) || length(temp) != length(duration))
     stop("wet_weight, temp, and duration must be the same length")
 

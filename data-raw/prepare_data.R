@@ -54,6 +54,8 @@ usethis::use_data(telemetry_parameters, overwrite = TRUE)
 # Rearing time parameters ----------------------------------------------
 
 rearing_time_parameters <- readRDS("data-raw/RearingTimeParameters.rds")
+rearing_time_parameters <- c(rearing_time_parameters, "thresh" = 22)
+# thresh is the temperature threshold (ºC); fish stop rearing on first day with mean temp > thresh
 usethis::use_data(rearing_time_parameters, overwrite = TRUE)
 
 # Rearing survival parameters ----------------------------------------------
@@ -63,16 +65,17 @@ usethis::use_data(rearing_time_parameters, overwrite = TRUE)
 rearing_survival_parameters <- c("survival" = 0.97, "min" = 0.95, "max" = 0.99)
 usethis::use_data(rearing_survival_parameters, overwrite = TRUE)
 
-# Floodplain growth parameters ----------------------------------------------
+# Growth parameters ----------------------------------------------
 # from Perry et al 2015
 # b = allometric growth exponent
 # d and g = shape parameters of the Ratkowsky model
 # TL = lower temperature limit for growth
 # TU = upper temperature limit for growth
 
-floodplain_growth_parameters <- c("b" = 0.338, "d" = 0.415, "g" = 0.315,
-                                  "TL" = 1.833, "TU" = 24.918)
-usethis::use_data(floodplain_growth_parameters, overwrite = TRUE)
+
+growth_parameters <- c("b" = 0.338, "d" = 0.415, "g" = 0.315,
+                       "TL" = 1.833, "TU" = 24.918, "thresh" = 22)
+usethis::use_data(growth_parameters, overwrite = TRUE)
 
 # Rearing probability ----------------------------------------------
 
