@@ -189,6 +189,7 @@ for (i in unique(fl_df$Run)){
 fl_dist_param <- bind_rows(fl_dist_param_list)
 
 # impute MeanLog and SDLog parameters for days where data was insufficient to estimate
+# here I used moving average to impute; with temperature I used linear interpolation
 timing_fl <- knights_landing_timing %>%
   gather(key = Run, value = Prop, Fall:Winter) %>%
   mutate(Date = as.character(Date)) %>%
