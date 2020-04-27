@@ -16,7 +16,7 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
                         sim_type = c("deterministic", "stochastic")){
 
   chinook_run <- match.arg(chinook_run)
-  scenaro <- match.arg(scenario)
+  scenario <- match.arg(scenario)
   sim_type <- match.arg(sim_type)
 
   wy_all <- annual_abundance[["WaterYear"]]
@@ -45,15 +45,19 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
   sac <- sac[sac[["FremontAbun"]] > 0,]
 
-  sac_passage_list <- passage(sac[["KnightsDay"]], sac[["FremontAbun"]], sac[["KnightsFL"]],
-                              route = "Sac", scenario, sim_type)
+  if (nrow(sac) > 0){
+    sac_passage_list <- passage(sac[["KnightsDay"]], sac[["FremontAbun"]], sac[["KnightsFL"]],
+                                route = "Sac", scenario, sim_type)
 
-  sac[["ChippsAbun"]] <- sac_passage_list[["ChippsAbun"]]
-  sac[["ChippsDay"]] <- sac_passage_list[["ChippsDay"]]
+    sac[["ChippsAbun"]] <- sac_passage_list[["ChippsAbun"]]
+    sac[["ChippsDay"]] <- sac_passage_list[["ChippsDay"]]
 
-  sac[["AdultReturns"]] <- ocean_survival(sac[["KnightsWW"]],
-                                          sac[["ChippsAbun"]],
-                                          sim_type)
+    sac[["AdultReturns"]] <- ocean_survival(sac[["KnightsWW"]],
+                                            sac[["ChippsAbun"]],
+                                            sim_type)
+  } else {
+    sac = data.frame()
+  }
 
   # Yolo route
   yolo <- data.frame(KnightsDay = model_days,
@@ -66,27 +70,31 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
   yolo <- yolo[yolo[["FremontAbun"]] > 0,]
 
-  fd <- flood_duration[[scenario]][["Value"]][yolo[["KnightsDay"]]]
-  yolo[["RearingTimeAdj"]] <- rearing_time_adj(rearing_time_max(fd, sim_type),
-                                               yolo[["KnightsWW"]],
-                                               yolo[["KnightsDay"]])
+  if (nrow(yolo) > 0){
+    fd <- flood_duration[[scenario]][["Value"]][yolo[["KnightsDay"]]]
+    yolo[["RearingTimeAdj"]] <- rearing_time_adj(rearing_time_max(fd, sim_type),
+                                                 yolo[["KnightsWW"]],
+                                                 yolo[["KnightsDay"]])
 
-  yolo[["RearingAbun"]] <- yolo[["FremontAbun"]] * rearing_survival(yolo[["RearingTimeAdj"]],
-                                                                    sim_type)
+    yolo[["RearingAbun"]] <- yolo[["FremontAbun"]] * rearing_survival(yolo[["RearingTimeAdj"]],
+                                                                      sim_type)
 
-  yolo[["RearingWW"]] <- rearing_growth(yolo[["KnightsWW"]],
-                                        yolo[["KnightsDay"]],
-                                        yolo[["RearingTimeAdj"]])
+    yolo[["RearingWW"]] <- rearing_growth(yolo[["KnightsWW"]],
+                                          yolo[["KnightsDay"]],
+                                          yolo[["RearingTimeAdj"]])
 
-  yolo_passage_list <- passage(yolo[["KnightsDay"]] + yolo[["RearingTimeAdj"]],
-                               yolo[["RearingAbun"]], weight_length(yolo[["RearingWW"]]),
-                               route = "Yolo", scenario, sim_type)
+    yolo_passage_list <- passage(yolo[["KnightsDay"]] + yolo[["RearingTimeAdj"]],
+                                 yolo[["RearingAbun"]], weight_length(yolo[["RearingWW"]]),
+                                 route = "Yolo", scenario, sim_type)
 
-  yolo[["ChippsAbun"]] <- yolo_passage_list[["ChippsAbun"]]
-  yolo[["ChippsDay"]] <- yolo_passage_list[["ChippsDay"]]
-  yolo[["AdultReturns"]] <- ocean_survival(yolo[["RearingWW"]],
-                                           yolo[["ChippsAbun"]],
-                                           sim_type)
+    yolo[["ChippsAbun"]] <- yolo_passage_list[["ChippsAbun"]]
+    yolo[["ChippsDay"]] <- yolo_passage_list[["ChippsDay"]]
+    yolo[["AdultReturns"]] <- ocean_survival(yolo[["RearingWW"]],
+                                             yolo[["ChippsAbun"]],
+                                             sim_type)
+  } else {
+    yolo <- data.frame()
+  }
 
   return(list("Sac" = sac, "Yolo" = yolo))
 }
