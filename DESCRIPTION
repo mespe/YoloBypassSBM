@@ -15,4 +15,4 @@ Imports:
 RoxygenNote: 7.1.0
 Suggests: tinytest
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5.0)
