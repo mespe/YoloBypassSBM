@@ -9,7 +9,7 @@
 #'
 #' @export
 #' @examples
-#' ocean_survival(40, 1000)
+#' ocean_survival(40, 1000, "deterministic")
 #'
 
 ocean_survival <- function(wet_weight, abundance, sim_type){

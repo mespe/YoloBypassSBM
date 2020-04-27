@@ -168,6 +168,8 @@ fl_df <- bind_rows(fl_df_97_99, fl_df_99_12) %>%
   select(WaterYear, Date = DATE, ForkLength = FL, Run = RACE) %>%
   mutate(Date = as.character(Date))
 
+# fit lognormal distribution on every day with sufficient data
+# best approach?
 fl_dist_param_list <- list()
 ctr <- 1
 for (i in unique(fl_df$Run)){
@@ -186,6 +188,7 @@ for (i in unique(fl_df$Run)){
 }
 fl_dist_param <- bind_rows(fl_dist_param_list)
 
+# impute MeanLog and SDLog parameters for days where data was insufficient to estimate
 timing_fl <- knights_landing_timing %>%
   gather(key = Run, value = Prop, Fall:Winter) %>%
   mutate(Date = as.character(Date)) %>%

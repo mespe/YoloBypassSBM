@@ -17,6 +17,6 @@ ocean_survival(wet_weight, abundance, sim_type)
 Number of adults returning from ocean after three years based on weight
 }
 \examples{
-ocean_survival(40, 1000)
+ocean_survival(40, 1000, "deterministic")
 
 }
