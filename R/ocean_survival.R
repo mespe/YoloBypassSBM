@@ -16,7 +16,7 @@
 ocean_survival <- function(predictor = c("length", "weight"), fork_length, wet_weight, abundance, sim_type){
 
   predictor <- match.arg(predictor)
-  predvar <- ifelse(predictor == "length", fork_length, wet_weight)
+  predvar <- if(predictor == "length") fork_length else wet_weight
 
   if(length(predvar) != length(abundance))
     stop("predictor variable and abundance must be the same length")
