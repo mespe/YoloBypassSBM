@@ -52,9 +52,12 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
     sac[["ChippsAbun"]] <- sac_passage_list[["ChippsAbun"]]
     sac[["ChippsDay"]] <- sac_passage_list[["ChippsDay"]]
 
-    sac[["AdultReturns"]] <- ocean_survival(sac[["KnightsWW"]],
+    sac[["AdultReturns"]] <- ocean_survival(simulation_parameters[["ocean_survival_predictor"]],
+                                            sac[["KnightsFL"]],
+                                            sac[["KnightsWW"]],
                                             sac[["ChippsAbun"]],
                                             sim_type)
+
   } else {
     sac = data.frame()
   }
@@ -89,7 +92,9 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
     yolo[["ChippsAbun"]] <- yolo_passage_list[["ChippsAbun"]]
     yolo[["ChippsDay"]] <- yolo_passage_list[["ChippsDay"]]
-    yolo[["AdultReturns"]] <- ocean_survival(yolo[["RearingWW"]],
+    yolo[["AdultReturns"]] <- ocean_survival(simulation_parameters[["ocean_survival_predictor"]],
+                                             weight_length(yolo[["RearingWW"]]),
+                                             yolo[["RearingWW"]],
                                              yolo[["ChippsAbun"]],
                                              sim_type)
   } else {

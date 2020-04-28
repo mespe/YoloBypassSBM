@@ -4,9 +4,19 @@
 \alias{ocean_survival}
 \title{Number of adults returning from ocean}
 \usage{
-ocean_survival(wet_weight, abundance, sim_type)
+ocean_survival(
+  predictor = c("length", "weight"),
+  fork_length,
+  wet_weight,
+  abundance,
+  sim_type
+)
 }
 \arguments{
+\item{predictor}{Predictor use in ocean survival relationship: length or weight}
+
+\item{fork_length}{Average fork length (mm) of cohort at estuary entry (Chipps Island)}
+
 \item{wet_weight}{Average wet weight (g) of cohort at estuary entry (Chipps Island)}
 
 \item{abundance}{Abundance of cohort at esturary entry}
@@ -15,8 +25,4 @@ ocean_survival(wet_weight, abundance, sim_type)
 }
 \description{
 Number of adults returning from ocean after three years based on weight
-}
-\examples{
-ocean_survival(40, 1000, "deterministic")
-
 }

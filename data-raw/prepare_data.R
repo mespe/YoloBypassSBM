@@ -5,36 +5,6 @@ library(readxl)
 library(cfs.misc)
 library(imputeTS)
 
-# # Cohort data template ----------------------------------------------
-#
-# route_list <- list(Abun = list(Fremont = NA_real_,
-#                                Rio = NA_real_,
-#                                Chipps = NA_real_,
-#                                Ocean = NA_real_),
-#                    FL = list(Fremont = NA_real_,
-#                              Rio = NA_real_,
-#                              Chipps = NA_real_),
-#                    Time = list(Knights = NA_real_,
-#                                Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
-#                                Rio = NA_real_),
-#                    Growth = list(Knights = NA_real_,
-#                                  Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
-#                                  Rio = NA_real_),
-#                    Surv = list(Knights = NA_real_,
-#                                Fremont = c("Passage" = NA_real_, "Residence" = NA_real_),
-#                                Rio = NA_real_,
-#                                Chipps = NA_real_))
-#
-# cohort_data_template <- list(Run = NA_character_,
-#                              ModelDay = c("Knights" = NA_real_,
-#                                           "Fremont" = NA_real_,
-#                                           "Rio" = NA_real_,
-#                                           "Chipps" = NA_real_),
-#                              Knights = c("Abun" = NA_real_, "FL" = NA_real_),
-#                              Yolo = route_list,
-#                              Sac = route_list)
-# usethis::use_data(cohort_data_template, overwrite = TRUE)
-
 # Simulation parameters ----------------------------------------------
 
 simulation_parameters <- list(name = "demo",
@@ -43,7 +13,8 @@ simulation_parameters <- list(name = "demo",
                               reps = 1,
                               water_years = 1997:2011,
                               chinook_runs = c("Fall", "LateFall", "Spring", "Winter"),
-                              scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"))
+                              scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"),
+                              ocean_survival_predictor = "length")
 usethis::use_data(simulation_parameters, overwrite = TRUE)
 
 # Length-weight parameters ----------------------------------------------
@@ -54,7 +25,8 @@ usethis::use_data(length_weight_parameters, overwrite = TRUE)
 
 # Ocean return parameters ----------------------------------------------
 
-ocean_survival_parameters <- readRDS("data-raw/OceanSurvivalParameters.rds")
+ocean_survival_parameters <- list("length" = readRDS("data-raw/OceanSurvivalParameters_Length.rds"),
+                                  "weight" = readRDS("data-raw/OceanSurvivalParameters_Weight.rds"))
 usethis::use_data(ocean_survival_parameters, overwrite = TRUE)
 
 # Telemetry model parameters ----------------------------------------------
