@@ -36,7 +36,10 @@ run_simulation <- function(){
       wy_list[[as.character(j)]] <- process_list(run_list, "Run")
     }
     if (!dir.exists("results")) dir.create("results")
-    message("Rep ", i)
+
+    # carriage return, \r, allows for rewriting on same line
+    cat("\r", "Rep", i, "of", simulation_parameters[["reps"]])
+
     saveRDS(process_list(wy_list, "WaterYear"),
             file.path("results", paste0(params[["name"]], "-Rep", i, ".rds")))
   }

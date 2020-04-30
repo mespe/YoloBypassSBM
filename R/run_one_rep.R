@@ -26,6 +26,9 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
   if (length(water_year) > 1)
     stop("water_year must have length = 1")
 
+  ocean_year_type <- ifelse(runif(1) < simulation_parameters[["ocean_year_probability"]],
+                            "length", "intercept")
+
   model_days <- get_wy_model_days(water_year)
   knights_abun <- initial_cohort_abundance(water_year, chinook_run, sim_type)
   knights_fl <- initial_cohort_fork_length(model_days, chinook_run, sim_type)
@@ -54,6 +57,7 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
     sac[["AdultReturns"]] <- ocean_survival(sac[["ChippsAbun"]],
                                             sac[["KnightsFL"]],
+                                            ocean_year_type,
                                             sim_type)
 
   } else {
@@ -106,9 +110,11 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
     yolo[["AdultReturnsRear"]] <- ocean_survival(yolo[["ChippsAbunRear"]],
                                                  weight_length(yolo[["PostRearingWW"]]),
+                                                 ocean_year_type,
                                                  sim_type)
     yolo[["AdultReturnsNon"]] <- ocean_survival(yolo[["ChippsAbunNon"]],
                                                 yolo[["KnightsFL"]],
+                                                ocean_year_type,
                                                 sim_type)
   } else {
     yolo <- data.frame()
