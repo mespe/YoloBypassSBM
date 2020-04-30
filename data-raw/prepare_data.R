@@ -13,8 +13,7 @@ simulation_parameters <- list(name = "demo",
                               reps = 1,
                               water_years = 1997:2011,
                               chinook_runs = c("Fall", "LateFall", "Spring", "Winter"),
-                              scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"),
-                              ocean_survival_predictor = "length")
+                              scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"))
 usethis::use_data(simulation_parameters, overwrite = TRUE)
 
 # Length-weight parameters ----------------------------------------------
@@ -25,8 +24,7 @@ usethis::use_data(length_weight_parameters, overwrite = TRUE)
 
 # Ocean return parameters ----------------------------------------------
 
-ocean_survival_parameters <- list("length" = readRDS("data-raw/OceanSurvivalParameters_Length.rds"),
-                                  "weight" = readRDS("data-raw/OceanSurvivalParameters_Weight.rds"))
+ocean_survival_parameters <- readRDS("data-raw/OceanSurvivalParameters_Length.rds")
 usethis::use_data(ocean_survival_parameters, overwrite = TRUE)
 
 # Telemetry model parameters ----------------------------------------------
@@ -59,11 +57,11 @@ growth_parameters <- c("b" = 0.338, "d" = 0.415, "g" = 0.315,
                        "TL" = 1.833, "TU" = 24.918, "thresh" = 22)
 usethis::use_data(growth_parameters, overwrite = TRUE)
 
-# Rearing probability ----------------------------------------------
+# Rearing abundance ----------------------------------------------
 
-rearing_probability_parameters <- c("min" = 0, "max" = 1,
-                                    "inflection" = 80, "steepness" = 5)
-usethis::use_data(rearing_probability_parameters, overwrite = TRUE)
+rearing_proportion_parameters <- c("min" = 0, "max" = 1,
+                                   "inflection" = 100, "steepness" = 15)
+usethis::use_data(rearing_proportion_parameters, overwrite = TRUE)
 
 # Annual abundance ----------------------------------------------
 

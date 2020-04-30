@@ -1,29 +1,24 @@
 #' Number of adults returning from ocean
 #'
-#' Number of adults returning from ocean after three years based on weight
+#' Number of adults returning from ocean after three years based on fork length
 #'
 #' @md
-#' @param predictor     Predictor use in ocean survival relationship: length or weight
-#' @param fork_length   Average fork length (mm) of cohort at estuary entry (Chipps Island)
-#' @param wet_weight    Average wet weight (g) of cohort at estuary entry (Chipps Island)
 #' @param abundance     Abundance of cohort at esturary entry
+#' @param fork_length   Average fork length (mm) of cohort at estuary entry (Chipps Island)
 #' @param sim_type      Simulation type: deterministic or stochastic
 #'
 #' @export
 #'
 #'
 
-ocean_survival <- function(predictor = c("length", "weight"), fork_length, wet_weight, abundance, sim_type){
+ocean_survival <- function(abundance, fork_length, sim_type){
 
-  predictor <- match.arg(predictor)
-  predvar <- if(predictor == "length") fork_length else wet_weight
+  if(length(fork_length) != length(abundance))
+    stop("fork_length and abundance must be the same length")
 
-  if(length(predvar) != length(abundance))
-    stop("predictor variable and abundance must be the same length")
+  params <- ocean_survival_parameters
 
-  params <- ocean_survival_parameters[[predictor]]
-
-  survival <- inv_logit(params[["inter"]] + params[["slope"]] * predvar)
+  survival <- inv_logit(params[["inter"]] + params[["slope"]] * fork_length)
 
   if (sim_type == "stochastic") {
     returning_adults <- mapply(function(abun, surv) VGAM::rbetabinom(1, size = abun, prob = surv, rho = params[["phi"]]),
