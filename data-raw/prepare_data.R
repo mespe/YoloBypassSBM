@@ -13,7 +13,9 @@ simulation_parameters <- list(name = "demo",
                               reps = 1,
                               water_years = 1997:2011,
                               chinook_runs = c("Fall", "LateFall", "Spring", "Winter"),
-                              scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"))
+                              scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"),
+                              # ocean_year_probability describes probability of ocean survival being based on fork length relationship
+                              ocean_year_probability = 1)
 usethis::use_data(simulation_parameters, overwrite = TRUE)
 
 # Length-weight parameters ----------------------------------------------
@@ -24,7 +26,8 @@ usethis::use_data(length_weight_parameters, overwrite = TRUE)
 
 # Ocean return parameters ----------------------------------------------
 
-ocean_survival_parameters <- readRDS("data-raw/OceanSurvivalParameters_Length.rds")
+ocean_survival_parameters <- list("length" = readRDS("data-raw/OceanSurvivalParameters_Length.rds"),
+                                  "intercept" = readRDS("data-raw/OceanSurvivalParameters_Intercept.rds"))
 usethis::use_data(ocean_survival_parameters, overwrite = TRUE)
 
 # Telemetry model parameters ----------------------------------------------
