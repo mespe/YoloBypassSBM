@@ -53,10 +53,13 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
                                 route = "Sac", scenario, sim_type)
 
     sac[["ChippsAbun"]] <- sac_passage_list[["ChippsAbun"]]
-    sac[["ChippsDay"]] <- sac_passage_list[["ChippsDay"]]
+    sac[["ChippsDay"]] <- sac[["KnightsDay"]] + sac_passage_list[["PassageTime"]]
+    sac[["ChippsFL"]] <- weight_length(passage_growth(sac[["KnightsWW"]],
+                                                      sac[["KnightsDay"]],
+                                                      sac_passage_list[["PassageTime"]]))
 
     sac[["AdultReturns"]] <- ocean_survival(sac[["ChippsAbun"]],
-                                            sac[["KnightsFL"]],
+                                            sac[["ChippsFL"]],
                                             ocean_year_type,
                                             sim_type)
 
@@ -86,9 +89,9 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
     yolo[["PostRearingAbun"]]  <-  yolo[["RearingAbun"]] * rearing_survival(yolo[["RearingTimeAdj"]], sim_type)
 
-    yolo[["PostRearingWW"]] <- rearing_growth(yolo[["KnightsWW"]],
-                                              yolo[["KnightsDay"]],
-                                              yolo[["RearingTimeAdj"]])
+    yolo[["PostRearingWW"]] <- rearing_growth(wet_weight = yolo[["KnightsWW"]],
+                                              model_day = yolo[["KnightsDay"]],
+                                              duration = yolo[["RearingTimeAdj"]])
 
     # yolo passage for rearing individuals
     yolo_passage_rear <- passage(yolo[["KnightsDay"]] + yolo[["RearingTimeAdj"]],
@@ -105,15 +108,22 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
     yolo[["ChippsAbunRear"]] <- yolo_passage_rear[["ChippsAbun"]]
     yolo[["ChippsAbunNon"]] <- yolo_passage_non[["ChippsAbun"]]
 
-    yolo[["ChippsDayRear"]] <- yolo_passage_rear[["ChippsDay"]]
-    yolo[["ChippsDayNon"]] <- yolo_passage_non[["ChippsDay"]]
+    yolo[["ChippsDayRear"]] <- yolo[["KnightsDay"]] + yolo[["RearingTimeAdj"]] + yolo_passage_rear[["PassageTime"]]
+    yolo[["ChippsDayNon"]] <- yolo[["KnightsDay"]] + yolo_passage_non[["PassageTime"]]
+
+    yolo[["ChippsFLRear"]] <- weight_length(passage_growth(wet_weight = yolo[["PostRearingWW"]],
+                                                           model_day = yolo[["KnightsDay"]]+ yolo[["RearingTimeAdj"]],
+                                                           duration = yolo_passage_rear[["PassageTime"]]))
+    yolo[["ChippsFLNon"]] <- weight_length(passage_growth(wet_weight = yolo[["KnightsWW"]],
+                                                          model_day = yolo[["KnightsDay"]],
+                                                          duration = yolo_passage_non[["PassageTime"]]))
 
     yolo[["AdultReturnsRear"]] <- ocean_survival(yolo[["ChippsAbunRear"]],
-                                                 weight_length(yolo[["PostRearingWW"]]),
+                                                 yolo[["ChippsFLRear"]],
                                                  ocean_year_type,
                                                  sim_type)
     yolo[["AdultReturnsNon"]] <- ocean_survival(yolo[["ChippsAbunNon"]],
-                                                yolo[["KnightsFL"]],
+                                                yolo[["ChippsFLNon"]],
                                                 ocean_year_type,
                                                 sim_type)
   } else {

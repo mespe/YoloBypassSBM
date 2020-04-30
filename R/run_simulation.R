@@ -38,10 +38,11 @@ run_simulation <- function(){
     if (!dir.exists("results")) dir.create("results")
 
     # carriage return, \r, allows for rewriting on same line
-    cat("\r", "Rep", i, "of", simulation_parameters[["reps"]])
+    cat("\r", "Rep", i, "of", params[["reps"]])
 
     saveRDS(process_list(wy_list, "WaterYear"),
             file.path("results", paste0(params[["name"]], "-Rep", i, ".rds")))
   }
 }
+
 

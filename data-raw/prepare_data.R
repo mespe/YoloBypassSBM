@@ -79,17 +79,39 @@ usethis::use_data(annual_abundance, overwrite = TRUE)
 flood_duration <- readRDS("data-raw/FloodDuration.rds")
 usethis::use_data(flood_duration, overwrite = TRUE)
 
+# Toe Drain temperature ----------------------------------------------
+
+td <- readRDS("data-raw/ToeDrainTemp.rds")
+toe_drain_temperature <- list(Date = td$date,
+                              DOY = td$doy,
+                              Value = td$temp)
+usethis::use_data(toe_drain_temperature, overwrite = TRUE)
+
+# Floodplain temperature difference ----------------------------------------------
+
+ftd <- readRDS("data-raw/FloodplainTemperatureDifference.rds")
+
+floodplain_temperature_difference <- list(DOY = ftd$DOY,
+                                          Value = ftd$Diff)
+usethis::use_data(floodplain_temperature_difference, overwrite = TRUE)
+
 # Floodplain temperature ----------------------------------------------
 
 td <- readRDS("data-raw/ToeDrainTemp.rds") %>%
-  left_join(readRDS("data-raw/FloodplainTemperatureDifference.rds"), by = c("doy" = "DOY")) %>%
-  mutate(fp_temp = temp + Diff) %>%
-  arrange(date)
+  left_join(readRDS("data-raw/FloodplainTemperatureDifference.rds"),
+            by = c("doy" = "DOY")) %>%
+  mutate(value = temp + Diff)
 
-floodplain_temperature <- list(Date = td$date,
-                               Value = td$fp_temp)
-
+floodplain_temperature <- list("Date" = td[["date"]],
+                               "Value" = td[["value"]])
 usethis::use_data(floodplain_temperature, overwrite = TRUE)
+
+# Freeport temperature ----------------------------------------------
+
+fpt <- readRDS("data-raw/FreeportTemp.rds")
+freeport_temperature <- list(Date = fpt$date,
+                              Value = fpt$temp)
+usethis::use_data(freeport_temperature, overwrite = TRUE)
 
 # Entry timing ----------------------------------------------
 

@@ -15,9 +15,21 @@
 #'
 "annual_abundance"
 
+#' Freeport temperature
+#'
+#' A dataset containing the daily temperature in the Sacramento River at Freeport
+#'
+#' @format A list of 2 vectors of 5477 elements:
+#' \describe{
+#'   \item{Date}{calendar date}
+#'   \item{Value}{mean daily temperature (ºC)}
+#' }
+#'
+"freeport_temperature"
+
 #' Floodplain temperature
 #'
-#' A dataset containing the predicted temperature on the Yolo Bypass floodplain
+#' A dataset containing the daily temperature on the floodplain
 #'
 #' @format A list of 2 vectors of 5477 elements:
 #' \describe{
@@ -26,6 +38,31 @@
 #' }
 #'
 "floodplain_temperature"
+
+#' Toe Drain temperature
+#'
+#' A dataset containing the daily temperature in the Toe Drain at the screw trap
+#'
+#' @format A list of 3 vectors of 5477 elements:
+#' \describe{
+#'   \item{Date}{calendar date}
+#'   \item{DOY}{day of year}
+#'   \item{Value}{mean daily temperature (ºC)}
+#' }
+#'
+"toe_drain_temperature"
+
+#' Floodplain temperature difference
+#'
+#' A dataset containing the difference between in temperature between the Toe Drain and floodplain
+#'
+#' @format A list of 2 vectors of 366 elements:
+#' \describe{
+#'   \item{DOY}{day of year}
+#'   \item{Value}{difference in mean daily temperature (ºC)}
+#' }
+#'
+"floodplain_temperature_difference"
 
 #' Proportion of fish entrained onto the Yolo Bypass at Fremont Weir
 #'

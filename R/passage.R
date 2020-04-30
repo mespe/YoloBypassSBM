@@ -23,7 +23,7 @@ passage <- function(model_day, abundance, fork_length, route = c("Sac", "Yolo"),
 
   flow <- freeport_flow[[scenario]][["Value"]][model_day]
   list("ChippsAbun" = passage_survival(abundance, fork_length, flow, route, sim_type),
-       "ChippsDay" = model_day + passage_time(fork_length, flow, route, sim_type))
+       "PassageTime" = passage_time(fork_length, flow, route, sim_type))
 }
 
 
