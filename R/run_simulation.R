@@ -1,12 +1,14 @@
 #' Run simulation
 #'
-#' Run simulation based on simulation parameters
+#' Run simulation based on simulation parameters. They typical workflow for running simulation is to reset_model_inputs(),
+#' set (in the global environment) model input data and parameter for a simulation, and then use run_simulation().
 #'
 #' @md
 #'
 #' @export
 #'
 #'
+
 
 run_simulation <- function(){
 
