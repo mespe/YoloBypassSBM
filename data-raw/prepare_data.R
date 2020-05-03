@@ -47,7 +47,7 @@ usethis::use_data(rearing_time_parameters, overwrite = TRUE)
 
 # default value of daily rearing survival (under deterministic simulation) and
 # lower and upper limits of uniform distribution of daily survival values
-rearing_survival_parameters <- c("survival" = 0.99, "min" = 0.95, "max" = 0.999)
+rearing_survival_parameters <- c("survival" = 0.99, "min" = 0.98, "max" = 1)
 usethis::use_data(rearing_survival_parameters, overwrite = TRUE)
 
 # Growth parameters ----------------------------------------------
