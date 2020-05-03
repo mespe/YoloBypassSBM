@@ -14,7 +14,7 @@ run_simulation <- function(){
 
   params <- simulation_parameters
   set.seed(params[["seed"]])
-  cat(params[["name"]])
+  cat(params[["name"]], "\n")
 
   process_list <- function(input_list, col_name){
     list("Sac" = dplyr::bind_rows(lapply(input_list, "[[", "Sac"), .id = col_name),
