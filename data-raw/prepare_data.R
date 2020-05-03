@@ -9,8 +9,7 @@ library(imputeTS)
 
 simulation_parameters <- list(name = "demo",
                               sim_type = "deterministic",
-                              random_seed = 2020,
-                              reps = 1,
+                              reps = 1:1,
                               water_years = 1997:2011,
                               chinook_runs = c("Fall", "LateFall", "Spring", "Winter"),
                               scenarios = "Exg",
