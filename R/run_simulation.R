@@ -39,7 +39,7 @@ run_simulation <- function(){
     }
     rep_list[[as.character(i)]] <- process_list(wy_list, "WaterYear")
     # carriage return, \r, allows for rewriting on same line
-    cat("\r", "Rep", i, "of", params[["reps"]])
+    cat("\r", "Rep", i, "of", max(params[["reps"]]))
   }
   if (!dir.exists("results")) dir.create("results")
   saveRDS(process_list(rep_list, "Rep"),
