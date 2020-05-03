@@ -56,14 +56,14 @@ process_results_sar = function (sim_name, type = c("monthly", "yearly", "both"))
   if (type %in% c("monthly", "both")){
     df_monthly <- df_raw %>%
       mutate(KnightsMonth = month(KnightsDate)) %>%
-      group_by(Rep, FremontMonth, Run, Scenario) %>%
+      group_by(Rep, KnightsMonth, Run, Scenario) %>%
       summary_helper() %>%
-      group_by(FremontMonth, Run, Scenario) %>%
+      group_by(KnightsMonth, Run, Scenario) %>%
       summarise(Lwr = quantile(Diff, probs = 0.025),
                 Median = median(Diff),
                 Upr = quantile(Diff, probs = 0.975)) %>%
-      mutate(FremontMonthAbb = month.abb[FremontMonth],
-             FremontMonthAbb = factor(FremontMonthAbb, levels = month.abb[c(10:12,1:9)]))
+      mutate(KnightsMonthAbb = month.abb[KnightsMonth],
+             KnightsMonthAbb = factor(KnightsMonthAbb, levels = month.abb[c(10:12,1:9)]))
   }
 
   if (type == "monthly") return(df_monthly)
