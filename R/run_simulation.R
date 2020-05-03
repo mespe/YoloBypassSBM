@@ -13,6 +13,8 @@
 run_simulation <- function(){
 
   params <- simulation_parameters
+  set.seed(params[["seed"]])
+  cat(params[["name"]])
 
   process_list <- function(input_list, col_name){
     list("Sac" = dplyr::bind_rows(lapply(input_list, "[[", "Sac"), .id = col_name),
@@ -42,6 +44,7 @@ run_simulation <- function(){
     cat("\r", "Rep", i, "of", max(params[["reps"]]))
   }
   if (!dir.exists("results")) dir.create("results")
+
   saveRDS(process_list(rep_list, "Rep"),
           file.path("results", paste0(params[["name"]],
                                       "-Reps-",

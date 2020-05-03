@@ -39,9 +39,9 @@ expect_equal(round(entrainment(120, 10000, "Exg", "deterministic")$Sac), 1265)
 # survival ----------------------------------------------------------
 
 # rearing
-expect_equal(round(rearing_survival(1, "deterministic"), 2), 0.97)
-expect_equal(round(rearing_survival(10, "deterministic"), 2), 0.74)
-expect_equal(round(rearing_survival(20, "deterministic"), 2), 0.54)
+expect_equal(round(rearing_survival(1, "deterministic"), 2), 0.99)
+expect_equal(round(rearing_survival(10, "deterministic"), 2), 0.9)
+expect_equal(round(rearing_survival(20, "deterministic"), 2), 0.82)
 
 # passage
 expect_equal(round(passage_survival(1000, 70, 60000, "Sac", "deterministic")), 490)
