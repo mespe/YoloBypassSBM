@@ -43,6 +43,7 @@ run_simulation <- function(){
     # carriage return, \r, allows for rewriting on same line
     cat("\r", "Rep", i, "of", max(params[["reps"]]))
   }
+  cat("\n")  # expectation is that cursor will generally be placed on next line, but this is insurance
   if (!dir.exists("results")) dir.create("results")
 
   saveRDS(process_list(rep_list, "Rep"),
