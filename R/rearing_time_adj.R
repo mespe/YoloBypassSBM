@@ -16,10 +16,10 @@ rearing_time_adj <- function(rearing_time_max, model_day){
     stop("rearing_time_max and model_day must be the same length")
 
   helper <- function(md, dur){
-    # subtract 1 because model_day is the first day of the rearing period
-    temps <- floodplain_temperature[["Value"]][md:(md + dur - 1)]
+    temps <- floodplain_temperature[["Value"]][md:(md + dur)]
     length(temps[temps < rearing_time_parameters[["thresh"]]])
   }
+
   mapply(helper, model_day, rearing_time_max)
 }
 
