@@ -13,7 +13,7 @@
 run_simulation <- function(){
 
   params <- simulation_parameters
-  set.seed(params[["seed"]])
+  set.seed(params[["random_seed"]])
   cat(params[["name"]], "\n")
 
   process_list <- function(input_list, col_name){
