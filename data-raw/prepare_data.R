@@ -25,6 +25,16 @@ usethis::use_data(simulation_parameters, overwrite = TRUE)
 length_weight_parameters <- c("a" = 0.000004, "b" = 3.2252)
 usethis::use_data(length_weight_parameters, overwrite = TRUE)
 
+# Water year type ----------------------------------------------
+
+water_year_type <- cfs.misc::get_water_year_type() %>%
+  filter(WaterYear %in% 1997:2011) %>%
+  left_join(tibble(SAC = c("W", "AN", "BN", "D", "C"),
+                   WaterYearType = c("Wet", "Above normal", "Below Normal", "Dry", "Critical"))) %>%
+  mutate(WaterYearType = factor(WaterYearType, levels = c("Wet", "Above normal", "Below Normal", "Dry", "Critical"))) %>%
+  select(WaterYear, WaterYearType)
+usethis::use_data(water_year_type, overwrite = TRUE)
+
 # Ocean return parameters ----------------------------------------------
 
 ocean_survival_parameters <- list("length" = readRDS("data-raw/OceanSurvivalParameters_Length.rds"),

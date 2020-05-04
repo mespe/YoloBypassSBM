@@ -5,12 +5,12 @@
 #'
 #' @md
 #' @param sim_name       Name of simulation
-#' @param type           Type of summary: monthly, yearly, or both. Monthly and yearly return tibbles. Both returns a list of two tibbles.
+#' @param type           Type of summary: `monthly`, `water_year_type` , or `both`. `monthly` and `water_year_type` return tibbles. `both` returns a list of two tibbles.
 #'
 #' @export
 #'
 
-process_results_sar = function (sim_name, type = c("monthly", "yearly", "both")) {
+process_results_sar = function (sim_name, type = c("monthly", "water_year_type", "both")) {
   type = match.arg(type)
 
   extract_data <- function(data_list){
@@ -43,11 +43,12 @@ process_results_sar = function (sim_name, type = c("monthly", "yearly", "both"))
   data_list <- lapply(file_names, function (x) extract_data(readRDS(x)))
   df_raw <- bind_rows(data_list)
 
-  if (type %in% c("yearly", "both")){
-    df_yearly <- df_raw %>%
-      group_by(Rep, WaterYear, Run, Scenario) %>%
+  if (type %in% c("water_year_type", "both")){
+    df_water_year_type <- df_raw %>%
+      left_join(water_year_type) %>%
+      group_by(Rep, WaterYearType, Run, Scenario) %>%
       summary_helper() %>%
-      group_by(WaterYear, Run, Scenario) %>%
+      group_by(WaterYearType, Run, Scenario) %>%
       summarise(Lwr = quantile(Diff, probs = 0.025),
                 Median = median(Diff),
                 Upr = quantile(Diff, probs = 0.975))
@@ -67,8 +68,8 @@ process_results_sar = function (sim_name, type = c("monthly", "yearly", "both"))
   }
 
   if (type == "monthly") return(df_monthly)
-  if (type == "yearly") return(df_yearly)
-  if (type == "both") return(list("Monthly" = df_monthly, "Yearly" = df_yearly))
+  if (type == "water_year_type") return(df_water_year_type)
+  if (type == "both") return(list("Monthly" = df_monthly, "WaterYearType" = df_water_year_type))
 
 }
 

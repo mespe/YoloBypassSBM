@@ -4,12 +4,12 @@
 \alias{process_results_sar}
 \title{Process results for SAR difference}
 \usage{
-process_results_sar(sim_name, type = c("monthly", "yearly", "both"))
+process_results_sar(sim_name, type = c("monthly", "water_year_type", "both"))
 }
 \arguments{
 \item{sim_name}{Name of simulation}
 
-\item{type}{Type of summary: monthly, yearly, or both. Monthly and yearly return tibbles. Both returns a list of two tibbles.}
+\item{type}{Type of summary: \code{monthly}, \code{water_year_type} , or \code{both}. \code{monthly} and \code{water_year_type} return tibbles. \code{both} returns a list of two tibbles.}
 }
 \description{
 Process results for difference in SAR between Yolo Bypass and Sacramento River routes where SAR is defined
