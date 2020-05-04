@@ -45,7 +45,7 @@ process_results_sar = function (sim_name, type = c("monthly", "water_year_type",
 
   if (type %in% c("water_year_type", "both")){
     df_water_year_type <- df_raw %>%
-      left_join(water_year_type) %>%
+      left_join(water_year_type, by = "WaterYear") %>%
       group_by(Rep, WaterYearType, Run, Scenario) %>%
       summary_helper() %>%
       group_by(WaterYearType, Run, Scenario) %>%
