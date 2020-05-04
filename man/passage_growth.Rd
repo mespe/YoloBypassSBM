@@ -4,7 +4,7 @@
 \alias{passage_growth}
 \title{Passage growth}
 \usage{
-passage_growth(wet_weight, model_day, duration)
+passage_growth(wet_weight, model_day, duration, route)
 }
 \arguments{
 \item{wet_weight}{Wet weight (g) at start of rearing period}
@@ -12,6 +12,8 @@ passage_growth(wet_weight, model_day, duration)
 \item{model_day}{Model day when rearing was initiated}
 
 \item{duration}{Duration (days) of rearing period}
+
+\item{route}{Route: Sacramento River (Sac) or Yolo Bypass (Yolo)}
 }
 \description{
 Returns final wet_weight given initial wet_weight, model day, and duration
