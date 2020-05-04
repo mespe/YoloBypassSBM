@@ -20,6 +20,10 @@ passage_growth <- function(wet_weight, model_day, duration){
     mean(freeport_temperature[["Value"]][md:md_end])
   }
 
+  # duration less than one means that no growth occurred
+  # by setting to 1; avoid error and helper while ensuring no growth
+  duration <- ifelse(duration < 1, 1, duration)
+
   temp <- mapply(helper, model_day, duration)
 
   growth(wet_weight, temp, duration)
