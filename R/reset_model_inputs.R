@@ -36,7 +36,7 @@ reset_model_inputs <- function(){
     message("Removed the following YoloBypassSBM objects from the global environment: ", toString(model_objs_rm))
     rm(list = model_objs_rm, envir = .GlobalEnv)
   } else {
-    message("No YoloBypassSBM objects found in global environment.")
+    message("No YoloBypassSBM objects needed to be removed from the global environment.")
   }
 }
 
