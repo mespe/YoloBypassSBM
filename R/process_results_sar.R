@@ -32,10 +32,10 @@ process_results_sar = function (sim_name, type = c("monthly", "yearly", "both"))
                 YoloFremont = sum(YoloFremont),
                 SacReturns = sum(SacReturns),
                 YoloReturns = sum(YoloReturns)) %>%
+      # if fish aren't using both routes, then no comparison to make
+      filter(YoloFremont > 0 & SacFremont > 0) %>%
       mutate(SacSAR = SacReturns/SacFremont,
-             SacSAR = ifelse(SacFremont == 0, 0, SacSAR),
              YoloSAR = YoloReturns/YoloFremont,
-             YoloSAR = ifelse(YoloFremont == 0, 0, YoloSAR),
              Diff = YoloSAR - SacSAR)
   }
 
