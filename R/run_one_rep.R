@@ -72,7 +72,6 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
   yolo[["FremontAbun"]] <- entrain_list[["Yolo"]]
 
-  # CohortID allows us to link cohorts that took each route
   yolo <- yolo[yolo[["KnightsAbun"]] > 0,]
   yolo[["CohortID"]] <- 1:nrow(yolo)
 
