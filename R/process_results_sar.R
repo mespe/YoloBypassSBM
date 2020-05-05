@@ -12,18 +12,21 @@
 
 process_results_sar = function (sim_name, type = c("monthly", "water_year_type", "both")) {
   type = match.arg(type)
+  require(dplyr)
+  require(lubridate)
 
   extract_data <- function(data_list){
-    tibble(Rep = data_list[["Sac"]][["Rep"]],
-           WaterYear = as.numeric(data_list[["Sac"]][["WaterYear"]]),
-           Run = data_list[["Sac"]][["Run"]],
-           Scenario = data_list[["Sac"]][["Scenario"]],
-           CohortID = data_list[["Sac"]][["CohortID"]],
-           KnightsDate = freeport_flow[["Exg"]][["Date"]][data_list[["Sac"]][["KnightsDay"]]],
-           SacFremont = data_list[["Sac"]][["FremontAbun"]],
-           YoloFremont = data_list[["Yolo"]][["FremontAbun"]],
-           SacReturns = data_list[["Sac"]][["AdultReturns"]],
-           YoloReturns = data_list[["Yolo"]][["AdultReturnsRear"]] + data_list[["Yolo"]][["AdultReturnsNon"]])
+    data_list[["Sac"]] %>%
+      select(Rep, WaterYear, Run, Scenario, CohortID, KnightsAbun, KnightsDay,
+             SacFremont = FremontAbun, SacReturns = AdultReturns) %>%
+      full_join(data_list[["Yolo"]] %>%
+                  mutate(YoloReturns = AdultReturnsRear + AdultReturnsNon) %>%
+                  select(Rep, WaterYear, Run, Scenario, CohortID, KnightsAbun, KnightsDay,
+                         YoloFremont = FremontAbun, YoloReturns),
+                by = c("Rep", "WaterYear", "Run", "Scenario", "CohortID", "KnightsAbun", "KnightsDay")) %>%
+      mutate(KnightsDate = freeport_flow[["Exg"]][["Date"]][KnightsDay],
+             WaterYear = as.numeric(WaterYear)) %>%
+      mutate_at(c("SacFremont", "SacReturns", "YoloFremont", "YoloReturns"), ~ifelse(is.na(.), 0, .))
   }
 
   summary_helper <- function(gdf){
