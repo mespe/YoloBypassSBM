@@ -4,17 +4,28 @@
 \alias{rearing_survival}
 \title{Rearing survival}
 \usage{
-rearing_survival(rearing_time, sim_type)
+rearing_survival(
+  model_day,
+  abundance,
+  rearing_time,
+  location = c("Delta", "Yolo"),
+  scenario,
+  sim_type
+)
 }
 \arguments{
+\item{model_day}{Model day at start of rearing period}
+
+\item{abundance}{Abundance at start of rearing period}
+
 \item{rearing_time}{Number of days spent rearing}
+
+\item{location}{Rearing location: Yolo or Delta}
+
+\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }
 \description{
 Rearing survival based on rearing time and daily survival
-}
-\examples{
-rearing_survival(10, "deterministic")
-
 }

@@ -1,4 +1,4 @@
-#' Passage survival and time from Fremont Weir to Chipps
+#' Passage survival and time from Fremont Weir to Chipps Island
 #'
 #' Passage survival and time (days) from Fremont Weir to Chipps Island based on fork length, flow, and route
 #'
@@ -22,7 +22,7 @@ passage <- function(model_day, abundance, fork_length, route = c("Sac", "Yolo"),
     stop("model_day, abundance, and fork_length must be the same length")
 
   flow <- freeport_flow[[scenario]][["Value"]][model_day]
-  list("ChippsAbun" = passage_survival(abundance, fork_length, flow, route, sim_type),
+  list("Abundance" = passage_survival(abundance, fork_length, flow, route, sim_type),
        "PassageTime" = passage_time(fork_length, flow, route, sim_type))
 }
 

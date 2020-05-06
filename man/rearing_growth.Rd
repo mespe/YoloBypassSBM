@@ -4,7 +4,7 @@
 \alias{rearing_growth}
 \title{Rearing growth}
 \usage{
-rearing_growth(wet_weight, model_day, duration)
+rearing_growth(wet_weight, model_day, duration, location)
 }
 \arguments{
 \item{wet_weight}{Wet weight (g) at start of rearing period}
@@ -12,6 +12,8 @@ rearing_growth(wet_weight, model_day, duration)
 \item{model_day}{Model day when rearing was initiated}
 
 \item{duration}{Duration (days) of rearing period}
+
+\item{location}{Rearing location: Yolo or Delta}
 }
 \description{
 Returns final wet_weight given initial wet_weight, model day, and duration

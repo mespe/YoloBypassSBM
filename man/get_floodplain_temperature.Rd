@@ -7,6 +7,6 @@
 get_floodplain_temperature()
 }
 \description{
-Returns floodplain temperature (sum of Toe Drain temperature and floodplain temperature difference);
-used if you want to adjust floodplain_temperature_difference and recalculate floodplain temperature
+Returns floodplain temperature (sum of Toe Drain/Freeport temperature and floodplain temperature difference);
+used to adjust floodplain_temperature_difference and recalculate floodplain temperature
 }

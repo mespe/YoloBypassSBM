@@ -11,6 +11,8 @@
 #'
 #'
 
+## probably would have take a different approach to storing output data if I was planning to incorporate Delta rearing from beginning
+## approach that I'm using in Yolo section is very prone to typos
 run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring", "Winter"),
                         scenario = c("Exg", "Alt01", "Alt04b", "Alt04", "Alt05", "Alt06"),
                         sim_type = c("deterministic", "stochastic")){
@@ -45,22 +47,37 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
                     stringsAsFactors = FALSE)
 
   sac[["FremontAbun"]] <- entrain_list[["Sac"]]
-  # assign CohortID to include even days with zero entry or entrainment
+  # assign CohortID to also include days with zero entry or entrainment
   # keeps CohortID synced between Sac and Yolo
   sac[["CohortID"]] <- 1:nrow(sac)
   sac <- sac[sac[["FremontAbun"]] > 0,]
 
   if (nrow(sac) > 0){
+
+    # Sacramento River passage
     sac_passage_list <- passage(sac[["KnightsDay"]], sac[["FremontAbun"]], sac[["KnightsFL"]],
                                 route = "Sac", scenario, sim_type)
 
-    sac[["ChippsAbun"]] <- sac_passage_list[["ChippsAbun"]]
-    sac[["ChippsDay"]] <- sac[["KnightsDay"]] + sac_passage_list[["PassageTime"]]
-    sac[["ChippsFL"]] <- weight_length(passage_growth(sac[["KnightsWW"]],
-                                                      sac[["KnightsDay"]],
-                                                      sac_passage_list[["PassageTime"]],
-                                                      route = "Sac"))
+    sac[["DeltaDay"]] <- sac[["KnightsDay"]] + sac_passage_list[["PassageTime"]]
+    sac[["DeltaAbun"]] <- sac_passage_list[["Abundance"]]
 
+    # Delta rearing
+
+    sac[["DeltaRearingTime"]] <- rearing_time_delta(model_day = sac[["DeltaDay"]],
+                                                    passage_time = sac_passage_list[["PassageTime"]],
+                                                    fork_length = sac[["KnightsFL"]],
+                                                    scenario, sim_type)
+    sac[["ChippsAbun"]] <- rearing_survival(model_day = sac[["DeltaDay"]],
+                                            abundance = sac[["DeltaAbun"]],
+                                            rearing_time = sac[["DeltaRearingTime"]],
+                                            location = "Delta",
+                                            scenario, sim_type)
+    sac[["ChippsFL"]] <- weight_length(rearing_growth(wet_weight = sac[["KnightsWW"]],
+                                                      model_day = sac[["DeltaDay"]],
+                                                      duration = sac[["DeltaRearingTime"]],
+                                                      location = "Delta"))
+
+    # Ocean
     sac[["AdultReturns"]] <- ocean_survival(sac[["ChippsAbun"]],
                                             sac[["ChippsFL"]],
                                             ocean_year_type,
@@ -77,60 +94,92 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
                      stringsAsFactors = FALSE)
 
   yolo[["FremontAbun"]] <- entrain_list[["Yolo"]]
-  # assign CohortID to include even days with zero entry or entrainment
+  # assign CohortID to also include days with zero entry or entrainment
   # keeps Cohort ID synced between Sac and Yolo
   yolo[["CohortID"]] <- 1:nrow(yolo)
   yolo <- yolo[yolo[["FremontAbun"]] > 0,]
 
   if (nrow(yolo) > 0){
 
-    yolo[["RearingTime"]] <- rearing_time(yolo[["KnightsDay"]], scenario, sim_type)
+    # Yolo Bypass rearing
 
-    yolo[["RearingAbun"]] <- rearing_abundance(yolo[["FremontAbun"]],
-                                               yolo[["KnightsFL"]],
-                                               sim_type)
+    yolo[["YoloRearingAbun"]] <- rearing_abundance(yolo[["FremontAbun"]], yolo[["KnightsFL"]], sim_type)
+    yolo[["YoloRearingTime"]] <- rearing_time_yolo(yolo[["KnightsDay"]], scenario, sim_type)
 
-    yolo[["PostRearingAbun"]]  <-  yolo[["RearingAbun"]] * rearing_survival(yolo[["RearingTime"]], sim_type)
+    yolo[["PostYoloRearingAbun"]]  <- rearing_survival(model_day = yolo[["KnightsDay"]] + yolo[["YoloRearingTime"]],
+                                                       abundance = yolo[["YoloRearingAbun"]],
+                                                       rearing_time = yolo[["YoloRearingTime"]],
+                                                       location = "Yolo",
+                                                       scenario, sim_type)
 
-    yolo[["PostRearingWW"]] <- rearing_growth(wet_weight = yolo[["KnightsWW"]],
-                                              model_day = yolo[["KnightsDay"]],
-                                              duration = yolo[["RearingTime"]])
+    yolo[["PostYoloRearingFL"]] <- weight_length(rearing_growth(wet_weight = yolo[["KnightsWW"]],
+                                                                model_day = yolo[["KnightsDay"]],
+                                                                duration = yolo[["YoloRearingTime"]],
+                                                                location = "Yolo"))
+
+    # Yolo Bypass passage
 
     # yolo passage for rearing individuals
-    yolo_passage_rear <- passage(yolo[["KnightsDay"]] + yolo[["RearingTime"]],
-                                 yolo[["PostRearingAbun"]],
-                                 weight_length(yolo[["PostRearingWW"]]),
+    yolo_passage_rear <- passage(yolo[["KnightsDay"]] + yolo[["YoloRearingTime"]],
+                                 yolo[["PostYoloRearingAbun"]],
+                                 yolo[["PostYoloRearingFL"]],
                                  route = "Yolo", scenario, sim_type)
 
     # yolo passage for non-rearing individuals
-    yolo_passage_non <- passage(yolo[["KnightsDay"]],
-                                yolo[["FremontAbun"]] - yolo[["RearingAbun"]],
-                                yolo[["KnightsFL"]],
-                                route = "Yolo", scenario, sim_type)
+    yolo_passage_no_rear <- passage(yolo[["KnightsDay"]],
+                                    yolo[["FremontAbun"]] - yolo[["YoloRearingAbun"]],
+                                    yolo[["KnightsFL"]],
+                                    route = "Yolo", scenario, sim_type)
 
-    yolo[["ChippsAbunRear"]] <- yolo_passage_rear[["ChippsAbun"]]
-    yolo[["ChippsAbunNon"]] <- yolo_passage_non[["ChippsAbun"]]
+    yolo[["DeltaAbun_YoloRear"]] <- yolo_passage_rear[["Abundance"]]
+    yolo[["DeltaAbun_YoloNoRear"]] <- yolo_passage_no_rear[["Abundance"]]
 
-    yolo[["ChippsDayRear"]] <- yolo[["KnightsDay"]] + yolo[["RearingTime"]] + yolo_passage_rear[["PassageTime"]]
-    yolo[["ChippsDayNon"]] <- yolo[["KnightsDay"]] + yolo_passage_non[["PassageTime"]]
+    yolo[["DeltaDay_YoloRear"]] <- yolo[["KnightsDay"]] + yolo[["YoloRearingTime"]] + yolo_passage_rear[["PassageTime"]]
+    yolo[["DeltaDay_YoloNoRear"]] <- yolo[["KnightsDay"]] + yolo_passage_no_rear[["PassageTime"]]
 
-    yolo[["ChippsFLRear"]] <- weight_length(passage_growth(wet_weight = yolo[["PostRearingWW"]],
-                                                           model_day = yolo[["KnightsDay"]]+ yolo[["RearingTime"]],
-                                                           duration = yolo_passage_rear[["PassageTime"]],
-                                                           route = "Yolo"))
-    yolo[["ChippsFLNon"]] <- weight_length(passage_growth(wet_weight = yolo[["KnightsWW"]],
-                                                          model_day = yolo[["KnightsDay"]],
-                                                          duration = yolo_passage_non[["PassageTime"]],
-                                                          route = "Yolo"))
 
-    yolo[["AdultReturnsRear"]] <- ocean_survival(yolo[["ChippsAbunRear"]],
-                                                 yolo[["ChippsFLRear"]],
-                                                 ocean_year_type,
-                                                 sim_type)
-    yolo[["AdultReturnsNon"]] <- ocean_survival(yolo[["ChippsAbunNon"]],
-                                                yolo[["ChippsFLNon"]],
-                                                ocean_year_type,
-                                                sim_type)
+    # Delta rearing
+
+    yolo[["DeltaRearingTime_YoloRear"]] <- rearing_time_delta(model_day = yolo[["DeltaDay_YoloRear"]],
+                                                              passage_time = yolo_passage_rear[["PassageTime"]],
+                                                              fork_length = yolo[["PostYoloRearingFL"]],
+                                                              scenario, sim_type)
+    yolo[["DeltaRearingTime_YoloNoRear"]] <- rearing_time_delta(model_day = yolo[["DeltaDay_YoloNoRear"]],
+                                                                passage_time = yolo_passage_no_rear[["PassageTime"]],
+                                                                fork_length = yolo[["KnightsFL"]],
+                                                                scenario, sim_type)
+
+    yolo[["ChippsAbun_YoloRear"]] <- rearing_survival(model_day = yolo[["DeltaDay_YoloRear"]],
+                                                      abundance = yolo[["DeltaAbun_YoloRear"]],
+                                                      rearing_time = yolo[["DeltaRearingTime_YoloRear"]],
+                                                      location = "Delta",
+                                                      scenario, sim_type)
+    yolo[["ChippsAbun_YoloNoRear"]] <- rearing_survival(model_day = yolo[["DeltaDay_YoloNoRear"]],
+                                                        abundance = yolo[["DeltaAbun_YoloNoRear"]],
+                                                        rearing_time = yolo[["DeltaRearingTime_YoloNoRear"]],
+                                                        location = "Delta",
+                                                        scenario, sim_type)
+
+
+    yolo[["ChippsFL_YoloRear"]] <- weight_length(rearing_growth(wet_weight = length_weight(yolo[["PostYoloRearingFL"]]),
+                                                                model_day = yolo[["DeltaDay_YoloRear"]],
+                                                                duration = yolo[["DeltaRearingTime_YoloRear"]],
+                                                                location = "Delta"))
+    yolo[["ChippsFL_YoloNoRear"]] <- weight_length(rearing_growth(wet_weight = yolo[["KnightsWW"]],
+                                                                  model_day = yolo[["DeltaDay_YoloNoRear"]],
+                                                                  duration = yolo[["DeltaRearingTime_YoloNoRear"]],
+                                                                  location = "Delta"))
+
+    # Ocean
+
+    yolo[["AdultReturns_YoloRear"]] <- ocean_survival(yolo[["ChippsAbun_YoloRear"]],
+                                                      yolo[["ChippsFL_YoloRear"]],
+                                                      ocean_year_type,
+                                                      sim_type)
+    yolo[["AdultReturns_YoloNoRear"]] <- ocean_survival(yolo[["ChippsAbun_YoloNoRear"]],
+                                                        yolo[["ChippsFL_YoloNoRear"]],
+                                                        ocean_year_type,
+                                                        sim_type)
   }else{
     yolo = data.frame()
   }

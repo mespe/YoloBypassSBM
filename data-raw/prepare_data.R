@@ -104,11 +104,10 @@ toe_drain_temperature <- list(Date = td$date,
 usethis::use_data(toe_drain_temperature, overwrite = TRUE)
 
 # Floodplain temperature difference ----------------------------------------------
-
+# default is to use the same temperature difference for Yolo and Delta
 ftd <- readRDS("data-raw/FloodplainTemperatureDifference.rds")
-
-floodplain_temperature_difference <- list(DOY = ftd$DOY,
-                                          Value = ftd$Diff)
+floodplain_temperature_difference <- list("Yolo" = list(DOY = ftd$DOY, Value = ftd$Diff),
+                                          "Delta" = list(DOY = ftd$DOY, Value = ftd$Diff))
 usethis::use_data(floodplain_temperature_difference, overwrite = TRUE)
 
 # Floodplain temperature ----------------------------------------------
@@ -124,10 +123,8 @@ fpt <- readRDS("data-raw/FreeportTemp.rds") %>%
   left_join(temp_diff) %>%
   mutate(value = temp + Diff)
 
-floodplain_temperature <- list("Yolo" = list("Date" = td[["date"]],
-                                             "Value" = td[["value"]]),
-                               "Delta" = list("Date" = fpt[["date"]],
-                                              "Value" = fpt[["value"]]))
+floodplain_temperature <- list("Yolo" = list("Date" = td[["date"]], "Value" = td[["value"]]),
+                               "Delta" = list("Date" = fpt[["date"]],"Value" = fpt[["value"]]))
 usethis::use_data(floodplain_temperature, overwrite = TRUE)
 
 # Freeport temperature ----------------------------------------------
@@ -247,4 +244,13 @@ usethis::use_data(fremont_weir_proportion, overwrite = TRUE)
 usethis::use_data(freeport_flow, overwrite = TRUE)
 
 
+# Inundated area ----------------------------------------------
+
+flooded <- read_csv("data-raw/Inundated_sqkm_long.csv")
+inundated_sqkm <- list()
+for (i in unique(flooded$Scenario)){
+  tmp <- filter(flooded, Scenario == i)
+  inundated_sqkm[[i]] <- list(Date = tmp$Date, Value = tmp$Inundated_sqkm)
+}
+usethis::use_data(inundated_sqkm, overwrite = TRUE)
 

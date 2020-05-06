@@ -2,7 +2,7 @@
 % Please edit documentation in R/passage.R
 \name{passage}
 \alias{passage}
-\title{Passage survival and time from Fremont Weir to Chipps}
+\title{Passage survival and time from Fremont Weir to Chipps Island}
 \usage{
 passage(
   model_day,
