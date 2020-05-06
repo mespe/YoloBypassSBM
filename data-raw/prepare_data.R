@@ -48,16 +48,21 @@ usethis::use_data(telemetry_parameters, overwrite = TRUE)
 
 # Rearing time parameters ----------------------------------------------
 
-rearing_time_parameters <- readRDS("data-raw/RearingTimeParameters.rds")
-rearing_time_parameters <- c(rearing_time_parameters, "thresh" = 22)
+rt_delta <- readRDS("data-raw/RearingTimeParameters_Delta.rds")
+rt_yolo <- readRDS("data-raw/RearingTimeParameters_Yolo.rds")
 # thresh is the temperature threshold (ºC); fish stop rearing on first day with mean temp > thresh
+rt_delta[["thresh"]] <- 22
+rt_yolo[["thresh"]] <- 22
+rearing_time_parameters <- list("Delta" = rt_delta, "Yolo" = rt_yolo)
 usethis::use_data(rearing_time_parameters, overwrite = TRUE)
 
 # Rearing survival parameters ----------------------------------------------
 
 # default value of daily rearing survival (under deterministic simulation) and
 # lower and upper limits of uniform distribution of daily survival values
-rearing_survival_parameters <- c("survival" = 0.99, "min" = 0.98, "max" = 1)
+rs_delta <- c("survival" = 0.99, "min" = 0.98, "max" = 1)
+rs_yolo <- c("min" = 0, "max" = 1, "inflection" = 74, "steepness" = -6)
+rearing_survival_parameters <- list("Delta" = rs_delta, "Yolo" = rs_yolo)
 usethis::use_data(rearing_survival_parameters, overwrite = TRUE)
 
 # Growth parameters ----------------------------------------------
@@ -108,20 +113,29 @@ usethis::use_data(floodplain_temperature_difference, overwrite = TRUE)
 
 # Floodplain temperature ----------------------------------------------
 
+temp_diff <- readRDS("data-raw/FloodplainTemperatureDifference.rds")
+
 td <- readRDS("data-raw/ToeDrainTemp.rds") %>%
-  left_join(readRDS("data-raw/FloodplainTemperatureDifference.rds"),
-            by = c("doy" = "DOY")) %>%
+  left_join(temp_diff, by = c("doy" = "DOY")) %>%
   mutate(value = temp + Diff)
 
-floodplain_temperature <- list("Date" = td[["date"]],
-                               "Value" = td[["value"]])
+fpt <- readRDS("data-raw/FreeportTemp.rds") %>%
+  mutate(DOY = lubridate::yday(date)) %>%
+  left_join(temp_diff) %>%
+  mutate(value = temp + Diff)
+
+floodplain_temperature <- list("Yolo" = list("Date" = td[["date"]],
+                                             "Value" = td[["value"]]),
+                               "Delta" = list("Date" = fpt[["date"]],
+                                              "Value" = fpt[["value"]]))
 usethis::use_data(floodplain_temperature, overwrite = TRUE)
 
 # Freeport temperature ----------------------------------------------
 
 fpt <- readRDS("data-raw/FreeportTemp.rds")
 freeport_temperature <- list(Date = fpt$date,
-                              Value = fpt$temp)
+                             DOY = lubridate::yday(fpt$date),
+                             Value = fpt$temp)
 usethis::use_data(freeport_temperature, overwrite = TRUE)
 
 # Entry timing ----------------------------------------------
