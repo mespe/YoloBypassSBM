@@ -43,8 +43,7 @@ process_results_sar = function (sim_name, type = c("monthly", "water_year_type",
   }
 
   file_names <- list.files(path = "results", pattern = sim_name, full.names = TRUE)
-  data_list <- lapply(file_names, function (x) extract_data(readRDS(x)))
-  df_raw <- bind_rows(data_list)
+  df_raw <- bind_rows(lapply(file_names, function (x) extract_data(readRDS(x))))
 
   if (type %in% c("water_year_type", "both")){
     df_water_year_type <- df_raw %>%
