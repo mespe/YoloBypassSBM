@@ -30,8 +30,8 @@ usethis::use_data(length_weight_parameters, overwrite = TRUE)
 water_year_type <- cfs.misc::get_water_year_type() %>%
   filter(WaterYear %in% 1997:2011) %>%
   left_join(tibble(SAC = c("W", "AN", "BN", "D", "C"),
-                   WaterYearType = c("Wet", "Above normal", "Below normal", "Dry", "Critical"))) %>%
-  mutate(WaterYearType = factor(WaterYearType, levels = c("Wet", "Above normal", "Below normal", "Dry", "Critical"))) %>%
+                   WaterYearType = c("Wet", "Above\nNormal", "Below\nNormal", "Dry", "Critical"))) %>%
+  mutate(WaterYearType = factor(WaterYearType, levels = c("Critical", "Dry", "Below\nNormal", "Above\nNormal", "Wet"))) %>%
   select(WaterYear, WaterYearType)
 usethis::use_data(water_year_type, overwrite = TRUE)
 
