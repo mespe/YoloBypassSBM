@@ -28,26 +28,22 @@ rearing_survival <- function(model_day, abundance, duration, location = c("Delta
 
   } else {
 
-    if (duration == 0){
-      # if duration is zero, then set survival to 1 to avoid  potential -Inf in log(0)
-      daily_survival <- 1
+    inundated_mean <- mapply(function(md, dur) mean(inundated_sqkm[[scenario]][["Value"]][md:(md + dur)]),
+                             model_day, duration)
 
-    } else {
+    daily_survival <- logistic(inundated_sqkm[[scenario]][["Value"]][model_day],
+                               p[["max"]], p[["steepness"]], p[["inflection"]], p[["min"]])
 
-      inundated_mean <- mapply(function(md, dur) mean(inundated_sqkm[[scenario]][["Value"]][md:(md + dur)]),
-                               model_day, duration)
+    # if duration is zero, then set survival to 1 to avoid potential log(0)
+    daily_survival <- ifelse(duration == 0, 1, daily_survival)
 
-      daily_survival <- logistic(inundated_sqkm[[scenario]][["Value"]][model_day],
-                                 p[["max"]], p[["steepness"]], p[["inflection"]], p[["min"]])
-
-      if (sim_type == "stochastic"){
-        # dividing by abundance to get stochastic daily survival that is turned into overall survival below
-        daily_abundance <- mapply(function(abun, ds) rbinom(n = 1, size = abun, prob = ds),
-                                 round(abundance), daily_survival)
-        # trying to catch problem values so we end up with zero rather than NaN
-        # setting survival to 1 follows same logic as above
-        daily_survival <- ifelse(abundance == 0, 1, daily_abundance/abundance)
-      }
+    if (sim_type == "stochastic"){
+      # dividing by abundance to get stochastic daily survival that is turned into overall survival below
+      daily_abundance <- mapply(function(abun, ds) rbinom(n = 1, size = abun, prob = ds),
+                                round(abundance), daily_survival)
+      # trying to catch problem values so we end up with zero rather than NaN
+      # setting survival to 1 following same logic as above
+      daily_survival <- ifelse(abundance == 0, 1, daily_abundance/abundance)
     }
 
   }
