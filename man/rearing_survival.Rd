@@ -7,7 +7,7 @@
 rearing_survival(
   model_day,
   abundance,
-  rearing_time,
+  duration,
   location = c("Delta", "Yolo"),
   scenario,
   sim_type
@@ -18,7 +18,7 @@ rearing_survival(
 
 \item{abundance}{Abundance at start of rearing period}
 
-\item{rearing_time}{Number of days spent rearing}
+\item{duration}{Number of days spent rearing}
 
 \item{location}{Rearing location: Yolo or Delta}
 

@@ -55,7 +55,9 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
   if (nrow(sac) > 0){
 
     # Sacramento River passage
-    sac_passage_list <- passage(sac[["KnightsDay"]], sac[["FremontAbun"]], sac[["KnightsFL"]],
+    sac_passage_list <- passage(model_day = sac[["KnightsDay"]],
+                                abundance = sac[["FremontAbun"]],
+                                fork_length = sac[["KnightsFL"]],
                                 route = "Sac", scenario, sim_type)
 
     sac[["DeltaDay"]] <- sac[["KnightsDay"]] + sac_passage_list[["PassageTime"]]
@@ -67,17 +69,20 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
                                                     passage_time = sac_passage_list[["PassageTime"]],
                                                     fork_length = sac[["KnightsFL"]],
                                                     scenario, sim_type)
+
     sac[["ChippsAbun"]] <- rearing_survival(model_day = sac[["DeltaDay"]],
                                             abundance = sac[["DeltaAbun"]],
-                                            rearing_time = sac[["DeltaRearingTime"]],
+                                            duration = sac[["DeltaRearingTime"]],
                                             location = "Delta",
                                             scenario, sim_type)
+
     sac[["ChippsFL"]] <- weight_length(rearing_growth(wet_weight = sac[["KnightsWW"]],
                                                       model_day = sac[["DeltaDay"]],
                                                       duration = sac[["DeltaRearingTime"]],
                                                       location = "Delta"))
 
     # Ocean
+
     sac[["AdultReturns"]] <- ocean_survival(sac[["ChippsAbun"]],
                                             sac[["ChippsFL"]],
                                             ocean_year_type,
@@ -103,12 +108,13 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
     # Yolo Bypass rearing
 
+    # YoloRearingAbun is proportion of cohorts that "decide" to rear on the Yolo Bypass multipled by abundance
     yolo[["YoloRearingAbun"]] <- rearing_abundance(yolo[["FremontAbun"]], yolo[["KnightsFL"]], sim_type)
     yolo[["YoloRearingTime"]] <- rearing_time_yolo(yolo[["KnightsDay"]], scenario, sim_type)
 
-    yolo[["PostYoloRearingAbun"]]  <- rearing_survival(model_day = yolo[["KnightsDay"]] + yolo[["YoloRearingTime"]],
+    yolo[["PostYoloRearingAbun"]]  <- rearing_survival(model_day = yolo[["KnightsDay"]],
                                                        abundance = yolo[["YoloRearingAbun"]],
-                                                       rearing_time = yolo[["YoloRearingTime"]],
+                                                       duration = yolo[["YoloRearingTime"]],
                                                        location = "Yolo",
                                                        scenario, sim_type)
 
@@ -120,15 +126,15 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
     # Yolo Bypass passage
 
     # yolo passage for rearing individuals
-    yolo_passage_rear <- passage(yolo[["KnightsDay"]] + yolo[["YoloRearingTime"]],
-                                 yolo[["PostYoloRearingAbun"]],
-                                 yolo[["PostYoloRearingFL"]],
+    yolo_passage_rear <- passage(model_day = yolo[["KnightsDay"]] + yolo[["YoloRearingTime"]],
+                                 abundance = yolo[["PostYoloRearingAbun"]],
+                                 fork_length = yolo[["PostYoloRearingFL"]],
                                  route = "Yolo", scenario, sim_type)
 
     # yolo passage for non-rearing individuals
-    yolo_passage_no_rear <- passage(yolo[["KnightsDay"]],
-                                    yolo[["FremontAbun"]] - yolo[["YoloRearingAbun"]],
-                                    yolo[["KnightsFL"]],
+    yolo_passage_no_rear <- passage(model_day = yolo[["KnightsDay"]],
+                                    abundance = yolo[["FremontAbun"]] - yolo[["YoloRearingAbun"]],
+                                    fork_length = yolo[["KnightsFL"]],
                                     route = "Yolo", scenario, sim_type)
 
     yolo[["DeltaAbun_YoloRear"]] <- yolo_passage_rear[["Abundance"]]
@@ -136,7 +142,6 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
     yolo[["DeltaDay_YoloRear"]] <- yolo[["KnightsDay"]] + yolo[["YoloRearingTime"]] + yolo_passage_rear[["PassageTime"]]
     yolo[["DeltaDay_YoloNoRear"]] <- yolo[["KnightsDay"]] + yolo_passage_no_rear[["PassageTime"]]
-
 
     # Delta rearing
 
@@ -151,15 +156,14 @@ run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring"
 
     yolo[["ChippsAbun_YoloRear"]] <- rearing_survival(model_day = yolo[["DeltaDay_YoloRear"]],
                                                       abundance = yolo[["DeltaAbun_YoloRear"]],
-                                                      rearing_time = yolo[["DeltaRearingTime_YoloRear"]],
+                                                      duration = yolo[["DeltaRearingTime_YoloRear"]],
                                                       location = "Delta",
                                                       scenario, sim_type)
     yolo[["ChippsAbun_YoloNoRear"]] <- rearing_survival(model_day = yolo[["DeltaDay_YoloNoRear"]],
                                                         abundance = yolo[["DeltaAbun_YoloNoRear"]],
-                                                        rearing_time = yolo[["DeltaRearingTime_YoloNoRear"]],
+                                                        duration = yolo[["DeltaRearingTime_YoloNoRear"]],
                                                         location = "Delta",
                                                         scenario, sim_type)
-
 
     yolo[["ChippsFL_YoloRear"]] <- weight_length(rearing_growth(wet_weight = length_weight(yolo[["PostYoloRearingFL"]]),
                                                                 model_day = yolo[["DeltaDay_YoloRear"]],
