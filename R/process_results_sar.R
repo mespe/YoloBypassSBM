@@ -20,7 +20,7 @@ process_results_sar = function (sim_name, type = c("monthly", "water_year_type",
       select(Rep, WaterYear, Run, Scenario, CohortID, KnightsAbun, KnightsDay,
              SacFremont = FremontAbun, SacReturns = AdultReturns) %>%
       full_join(data_list[["Yolo"]] %>%
-                  mutate(YoloReturns = AdultReturnsRear + AdultReturnsNon) %>%
+                  mutate(YoloReturns = AdultReturns_YoloRear + AdultReturns_YoloNoRear) %>%
                   select(Rep, WaterYear, Run, Scenario, CohortID, KnightsAbun, KnightsDay,
                          YoloFremont = FremontAbun, YoloReturns),
                 by = c("Rep", "WaterYear", "Run", "Scenario", "CohortID", "KnightsAbun", "KnightsDay")) %>%
