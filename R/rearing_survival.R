@@ -28,15 +28,28 @@ rearing_survival <- function(model_day, abundance, duration, location = c("Delta
 
   } else {
 
-    daily_survival <- logistic(inundated_sqkm[[scenario]][["Value"]][model_day],
-                               p[["max"]], p[["steepness"]], p[["inflection"]], p[["min"]])
+    if (duration == 0){
+      # if duration is zero, then set survival to 1 to avoid  potential -Inf in log(0)
+      daily_survival <- 1
 
-    if (sim_type == "stochastic"){
-      # might be confused when I come back to this
-      # dividing by abundance to get stochastic daily survival
-      daily_survival <- mapply(function(abun, ds) rbinom(n = 1, size = abun, prob = ds),
-                               round(abundance), daily_survival)/abundance
+    } else {
+
+      inundated_mean <- mapply(function(md, dur) mean(inundated_sqkm[[scenario]][["Value"]][md:(md + dur)]),
+                               model_day, duration)
+
+      daily_survival <- logistic(inundated_sqkm[[scenario]][["Value"]][model_day],
+                                 p[["max"]], p[["steepness"]], p[["inflection"]], p[["min"]])
+
+      if (sim_type == "stochastic"){
+        # dividing by abundance to get stochastic daily survival that is turned into overall survival below
+        daily_abundance <- mapply(function(abun, ds) rbinom(n = 1, size = abun, prob = ds),
+                                 round(abundance), daily_survival)
+        # trying to catch problem values so we end up with zero rather than NaN
+        # setting survival to 1 follows same logic as above
+        daily_survival <- ifelse(abundance == 0, 1, daily_abundance/abundance)
+      }
     }
+
   }
-  abundance * exp(log(daily_survival)*duration)
+  abundance * exp(log(daily_survival) * duration)
 }
