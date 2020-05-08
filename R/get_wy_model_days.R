@@ -13,11 +13,6 @@
 #'
 
 get_wy_model_days <- function(water_year){
-  if (length(water_year) > 1)
-    stop("water_year must be length 1")
-  if (!(water_year %in% annual_abundance[["WaterYear"]]))
-    stop("water_year is outside range of data")
-
   # quirk of history that model was chosen to start on Oct 2nd
   month_day <- ifelse(water_year == 1997, "-10-02", "-10-01")
   # num_days are all one less than expected because index starts with 0 in as.Date

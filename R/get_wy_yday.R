@@ -11,9 +11,6 @@
 #'
 
 get_wy_yday <- function(model_day){
-  if (any(model_day < 1)) stop("model_day is not positive integer")
-  if (any(model_day > 5382)) stop("model_day is outside range of data")
-
   wy_yday <- function(x){
     x_lt <- as.POSIXlt(x)
     x_lt$yday + ifelse(x_lt$mon + 1L < 10L, 93,

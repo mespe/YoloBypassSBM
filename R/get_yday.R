@@ -11,7 +11,6 @@
 #'
 
 get_yday <- function(model_day){
-  if (any(model_day < 1)) stop("model_day is not positive integer")
   # Date vector is same for all runs; choice of Fall is arbitrary
   as.POSIXlt(knights_landing_fl_params[["Fall"]][["Date"]][model_day])$yday + 1
 }
