@@ -4,6 +4,7 @@ library(tidyverse)
 library(readxl)
 library(cfs.misc)
 library(imputeTS)
+library(lubridate)
 
 # Simulation parameters ----------------------------------------------
 
@@ -98,7 +99,7 @@ usethis::use_data(flood_duration, overwrite = TRUE)
 # Toe Drain temperature ----------------------------------------------
 
 td <- readRDS("data-raw/ToeDrainTemp.rds")
-toe_drain_temperature <- list(Date = td$date,
+toe_drain_temperature <- list(Date = ymd(td$date),
                               DOY = td$doy,
                               Value = td$temp)
 usethis::use_data(toe_drain_temperature, overwrite = TRUE)
@@ -116,7 +117,8 @@ temp_diff <- readRDS("data-raw/FloodplainTemperatureDifference.rds")
 
 td <- readRDS("data-raw/ToeDrainTemp.rds") %>%
   left_join(temp_diff, by = c("doy" = "DOY")) %>%
-  mutate(value = temp + Diff)
+  mutate(date = ymd(date),
+         value = temp + Diff)
 
 fpt <- readRDS("data-raw/FreeportTemp.rds") %>%
   mutate(DOY = lubridate::yday(date)) %>%
@@ -155,7 +157,8 @@ knights_landing_timing <- klt_raw %>%
   arrange(Date) %>%
   select(-Drop) %>%
   replace_na(list(Fall = 0, Spring = 0, Winter = 0, LateFall = 0)) %>%
-  mutate(ModelDay = 1:length(Fall))
+  mutate(Date = ymd(Date),
+         ModelDay = 1:length(Fall))
 usethis::use_data(knights_landing_timing, overwrite = TRUE)
 
 # Fork length ----------------------------------------------
@@ -242,7 +245,6 @@ for (i in flow_files){
 }
 usethis::use_data(fremont_weir_proportion, overwrite = TRUE)
 usethis::use_data(freeport_flow, overwrite = TRUE)
-
 
 # Inundated area ----------------------------------------------
 
