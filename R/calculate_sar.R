@@ -24,7 +24,7 @@ calculate_sar = function(sim_name) {
     full_join(extracted_list[["Yolo"]] %>%
                 mutate(YoloReturns = AdultReturns_YoloRear + AdultReturns_YoloNoRear),
               by = c("Rep", "WaterYear", "Run", "CohortID", "KnightsAbun", "KnightsDay")) %>%
-    mutate(KnightsDate = freeport_flow[["Exg"]][["Date"]][KnightsDay],
+    mutate(KnightsDate = freeport_flow[["Date"]][KnightsDay],
            WaterYear = as.numeric(WaterYear)) %>%
     mutate(AdultReturns = SacReturns + YoloReturns,
            AdultReturns = ifelse(is.na(AdultReturns), 0, AdultReturns))

@@ -39,7 +39,7 @@ calculate_sar_difference = function(sim_name) {
                 mutate(YoloReturns = AdultReturns_YoloRear + AdultReturns_YoloNoRear) %>%
                 rename(YoloFremont = FremontAbun),
               by = c("Rep", "WaterYear", "Run", "CohortID", "KnightsAbun", "KnightsDay")) %>%
-    mutate(KnightsDate = freeport_flow[["Exg"]][["Date"]][KnightsDay],
+    mutate(KnightsDate = freeport_flow[["Date"]][KnightsDay],
            WaterYear = as.numeric(WaterYear)) %>%
     mutate_at(c("SacFremont", "SacReturns", "YoloFremont", "YoloReturns"), ~ifelse(is.na(.), 0, .))
 
