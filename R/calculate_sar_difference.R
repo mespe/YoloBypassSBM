@@ -27,9 +27,9 @@ calculate_sar_difference = function(sim_name) {
   }
 
   extracted_list <- extract_results(sim_name,
-                                    sac_columns = c("Rep", "WaterYear", "Run", "Scenario", "CohortID",
+                                    sac_columns = c("Rep", "WaterYear", "Run", "CohortID",
                                                     "KnightsAbun", "KnightsDay", "FremontAbun", "AdultReturns"),
-                                    yolo_columns = c("Rep", "WaterYear", "Run", "Scenario", "CohortID",
+                                    yolo_columns = c("Rep", "WaterYear", "Run", "CohortID",
                                                      "KnightsAbun", "KnightsDay", "FremontAbun",
                                                      "AdultReturns_YoloRear", "AdultReturns_YoloNoRear"))
 
@@ -38,23 +38,23 @@ calculate_sar_difference = function(sim_name) {
     full_join(extracted_list[["Yolo"]] %>%
                 mutate(YoloReturns = AdultReturns_YoloRear + AdultReturns_YoloNoRear) %>%
                 rename(YoloFremont = FremontAbun),
-              by = c("Rep", "WaterYear", "Run", "Scenario", "CohortID", "KnightsAbun", "KnightsDay")) %>%
+              by = c("Rep", "WaterYear", "Run", "CohortID", "KnightsAbun", "KnightsDay")) %>%
     mutate(KnightsDate = freeport_flow[["Exg"]][["Date"]][KnightsDay],
            WaterYear = as.numeric(WaterYear)) %>%
     mutate_at(c("SacFremont", "SacReturns", "YoloFremont", "YoloReturns"), ~ifelse(is.na(.), 0, .))
 
   df_wyt <- df_raw %>%
     left_join(water_year_type, by = "WaterYear") %>%
-    group_by(Rep, WaterYearType, Run, Scenario) %>%
+    group_by(Rep, WaterYearType, Run) %>%
     summary_helper() %>%
-    group_by(WaterYearType, Run, Scenario) %>%
+    group_by(WaterYearType, Run) %>%
     summarise_quantiles("Diff")
 
   df_month <- df_raw %>%
     mutate(KnightsMonth = month(KnightsDate)) %>%
-    group_by(Rep, KnightsMonth, Run, Scenario) %>%
+    group_by(Rep, KnightsMonth, Run) %>%
     summary_helper() %>%
-    group_by(KnightsMonth, Run, Scenario) %>%
+    group_by(KnightsMonth, Run) %>%
     summarise_quantiles("Diff") %>%
     mutate(KnightsMonthAbb = factor(month.abb[KnightsMonth],
                                     levels = month.abb[c(10:12,1:9)]))

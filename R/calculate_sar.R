@@ -13,9 +13,9 @@ calculate_sar = function(sim_name) {
   require(lubridate)
 
   extracted_list <- extract_results(sim_name,
-                                    sac_columns = c("Rep", "WaterYear", "Run", "Scenario", "CohortID",
+                                    sac_columns = c("Rep", "WaterYear", "Run", "CohortID",
                                                     "KnightsAbun", "KnightsDay", "AdultReturns"),
-                                    yolo_columns = c("Rep", "WaterYear", "Run", "Scenario", "CohortID",
+                                    yolo_columns = c("Rep", "WaterYear", "Run", "CohortID",
                                                      "KnightsAbun", "KnightsDay",
                                                      "AdultReturns_YoloRear", "AdultReturns_YoloNoRear"))
 
@@ -23,7 +23,7 @@ calculate_sar = function(sim_name) {
     rename(SacReturns = AdultReturns) %>%
     full_join(extracted_list[["Yolo"]] %>%
                 mutate(YoloReturns = AdultReturns_YoloRear + AdultReturns_YoloNoRear),
-              by = c("Rep", "WaterYear", "Run", "Scenario", "CohortID", "KnightsAbun", "KnightsDay")) %>%
+              by = c("Rep", "WaterYear", "Run", "CohortID", "KnightsAbun", "KnightsDay")) %>%
     mutate(KnightsDate = freeport_flow[["Exg"]][["Date"]][KnightsDay],
            WaterYear = as.numeric(WaterYear)) %>%
     mutate(AdultReturns = SacReturns + YoloReturns,
@@ -31,20 +31,20 @@ calculate_sar = function(sim_name) {
 
   df_wyt <- df_raw %>%
     left_join(water_year_type, by = "WaterYear") %>%
-    group_by(Rep, WaterYearType, Run, Scenario) %>%
+    group_by(Rep, WaterYearType, Run) %>%
     summarise(KnightsAbun = sum(KnightsAbun),
               AdultReturns = sum(AdultReturns)) %>%
     mutate(SAR = AdultReturns/KnightsAbun) %>%
-    group_by(WaterYearType, Run, Scenario) %>%
+    group_by(WaterYearType, Run) %>%
     summarise_quantiles("SAR")
 
   df_month <- df_raw %>%
     mutate(KnightsMonth = month(KnightsDate)) %>%
-    group_by(Rep, KnightsMonth, Run, Scenario) %>%
+    group_by(Rep, KnightsMonth, Run) %>%
     summarise(KnightsAbun = sum(KnightsAbun),
               AdultReturns = sum(AdultReturns)) %>%
     mutate(SAR = AdultReturns/KnightsAbun) %>%
-    group_by(KnightsMonth, Run, Scenario) %>%
+    group_by(KnightsMonth, Run) %>%
     summarise_quantiles("SAR") %>%
     mutate(KnightsMonthAbb = factor(month.abb[KnightsMonth],
                                     levels = month.abb[c(10:12,1:9)]))
