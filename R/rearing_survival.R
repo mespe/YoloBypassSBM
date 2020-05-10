@@ -7,13 +7,12 @@
 #' @param abundance     Abundance at start of rearing period
 #' @param duration      Number of days spent rearing
 #' @param location      Rearing location: Yolo or Delta
-#' @param scenario      Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06
 #' @param sim_type      Simulation type: deterministic or stochastic
 #'
 #' @export
 #'
 
-rearing_survival <- function(model_day, abundance, duration, location = c("Delta", "Yolo"), scenario, sim_type){
+rearing_survival <- function(model_day, abundance, duration, location = c("Delta", "Yolo"), sim_type){
   location <- match.arg(location)
 
   p <- rearing_survival_parameters[[location]]
@@ -28,10 +27,10 @@ rearing_survival <- function(model_day, abundance, duration, location = c("Delta
 
   } else {
 
-    inundated_mean <- mapply(function(md, dur) mean(inundated_sqkm[[scenario]][["Value"]][md:(md + dur)]),
+    inundated_mean <- mapply(function(md, dur) mean(inundated_sqkm[["Value"]][md:(md + dur)]),
                              model_day, duration)
 
-    daily_survival <- logistic(inundated_sqkm[[scenario]][["Value"]][model_day],
+    daily_survival <- logistic(inundated_sqkm[["Value"]][model_day],
                                p[["max"]], p[["steepness"]], p[["inflection"]], p[["min"]])
 
     # if duration is zero, then set survival to 1 to avoid potential log(0)

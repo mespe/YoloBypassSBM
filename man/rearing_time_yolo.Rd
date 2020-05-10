@@ -4,12 +4,10 @@
 \alias{rearing_time_yolo}
 \title{Yolo Bypass rearing time}
 \usage{
-rearing_time_yolo(model_day, scenario, sim_type)
+rearing_time_yolo(model_day, sim_type)
 }
 \arguments{
 \item{model_day}{Model day when rearing was initiated}
-
-\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }

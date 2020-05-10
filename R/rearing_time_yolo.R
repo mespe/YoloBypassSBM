@@ -4,17 +4,16 @@
 #'
 #' @md
 #' @param model_day     Model day when rearing was initiated
-#' @param scenario      Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06
 #' @param sim_type      Simulation type: deterministic or stochastic
 #'
 #' @export
 #'
 #'
 
-rearing_time_yolo <- function(model_day, scenario, sim_type){
+rearing_time_yolo <- function(model_day, sim_type){
 
   params = rearing_time_parameters[["Yolo"]]
-  fd <- flood_duration[[scenario]][["Value"]][model_day]
+  fd <- flood_duration[["Value"]][model_day]
   rt_fd <- exp(params[["inter"]] + params[["slope"]] * fd)
 
   if (sim_type == "stochastic"){

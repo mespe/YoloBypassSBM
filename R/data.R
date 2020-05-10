@@ -67,9 +67,9 @@
 #' Proportion of fish entrained onto the Yolo Bypass at Fremont Weir
 #'
 #' A dataset containing the predicted proportion of fish entering the Yolo Bypass
-#' under six scenarios for each day of the 15-yr model period.
+#' for each day of the 15-yr model period.
 #'
-#' @format A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+#' @format A list comprised of 2 vectors of 5477 elements:
 #' \describe{
 #'   \item{Date}{calendar date}
 #'   \item{Value}{proportion of fish entering the Yolo Bypass}
@@ -79,9 +79,10 @@
 
 #' Flood duration
 #'
-#' Number of days where inundation area throughout the Yolo Bypass is above 142.5 sq. km in a window of 120 days from the date that cohort entered the Yolo Bypass
+#' Number of days where Yolo Bypass flows exceeded 4,000 cfs in a window of 120 days
+#' from the date that cohort entered the Yolo Bypass.
 #'
-#' @format A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+#' @format A list comprised of 2 vectors of 5477 elements:
 #' \describe{
 #'   \item{Date}{calendar date}
 #'   \item{Value}{flood duration (days)}
@@ -93,7 +94,7 @@
 #'
 #' A dataset containing the modeled flow at Freeport.
 #'
-#' @format A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+#' @format A list comprised of 2 vectors of 5477 elements:
 #' \describe{
 #'   \item{Date}{calendar date}
 #'   \item{Value}{flow (cfs) at Freeport}

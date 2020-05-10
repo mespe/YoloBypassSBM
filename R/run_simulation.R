@@ -28,14 +28,9 @@ run_simulation <- function(){
     for (j in params[["water_years"]]){
       run_list <- list()
       for (k in params[["chinook_runs"]]){
-        scenario_list <- list()
-        for (l in params[["scenarios"]]){
-          scenario_list[[l]] <- run_one_rep(water_year = j,
-                                            chinook_run = k,
-                                            scenario = l,
-                                            sim_type = params[["sim_type"]])
-        }
-        run_list[[k]] <- process_list(scenario_list, "Scenario")
+        run_list[[k]] <- run_one_rep(water_year = j,
+                                     chinook_run = k,
+                                     sim_type = params[["sim_type"]])
       }
       wy_list[[as.character(j)]] <- process_list(run_list, "Run")
     }

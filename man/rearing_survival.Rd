@@ -9,7 +9,6 @@ rearing_survival(
   abundance,
   duration,
   location = c("Delta", "Yolo"),
-  scenario,
   sim_type
 )
 }
@@ -21,8 +20,6 @@ rearing_survival(
 \item{duration}{Number of days spent rearing}
 
 \item{location}{Rearing location: Yolo or Delta}
-
-\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }

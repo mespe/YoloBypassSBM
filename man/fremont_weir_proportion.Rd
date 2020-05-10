@@ -5,7 +5,7 @@
 \alias{fremont_weir_proportion}
 \title{Proportion of fish entrained onto the Yolo Bypass at Fremont Weir}
 \format{
-A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+A list comprised of 2 vectors of 5477 elements:
 \describe{
   \item{Date}{calendar date}
   \item{Value}{proportion of fish entering the Yolo Bypass}
@@ -16,6 +16,6 @@ fremont_weir_proportion
 }
 \description{
 A dataset containing the predicted proportion of fish entering the Yolo Bypass
-under six scenarios for each day of the 15-yr model period.
+for each day of the 15-yr model period.
 }
 \keyword{datasets}

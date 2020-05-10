@@ -4,7 +4,7 @@
 \alias{rearing_time_delta}
 \title{Delta rearing time}
 \usage{
-rearing_time_delta(model_day, passage_time, fork_length, scenario, sim_type)
+rearing_time_delta(model_day, passage_time, fork_length, sim_type)
 }
 \arguments{
 \item{model_day}{Model day when rearing was initiated}
@@ -12,8 +12,6 @@ rearing_time_delta(model_day, passage_time, fork_length, scenario, sim_type)
 \item{passage_time}{Passge time}
 
 \item{fork_length}{Average fork length (mm) of cohort}
-
-\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }

@@ -5,7 +5,7 @@
 \alias{flood_duration}
 \title{Flood duration}
 \format{
-A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+A list comprised of 2 vectors of 5477 elements:
 \describe{
   \item{Date}{calendar date}
   \item{Value}{flood duration (days)}
@@ -15,6 +15,7 @@ A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 58
 flood_duration
 }
 \description{
-Number of days where inundation area throughout the Yolo Bypass is above 142.5 sq. km in a window of 120 days from the date that cohort entered the Yolo Bypass
+Number of days where Yolo Bypass flows exceeded 4,000 cfs in a window of 120 days
+from the date that cohort entered the Yolo Bypass.
 }
 \keyword{datasets}

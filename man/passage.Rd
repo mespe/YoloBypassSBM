@@ -4,14 +4,7 @@
 \alias{passage}
 \title{Passage survival and time from Fremont Weir to Chipps Island}
 \usage{
-passage(
-  model_day,
-  abundance,
-  fork_length,
-  route = c("Sac", "Yolo"),
-  scenario,
-  sim_type
-)
+passage(model_day, abundance, fork_length, route = c("Sac", "Yolo"), sim_type)
 }
 \arguments{
 \item{model_day}{Model day at start of passage}
@@ -21,8 +14,6 @@ passage(
 \item{fork_length}{Fork length (mm) at Fremont Weir}
 
 \item{route}{Route: Sacramento River (Sac) or Yolo Bypass (Yolo)}
-
-\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
 
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }

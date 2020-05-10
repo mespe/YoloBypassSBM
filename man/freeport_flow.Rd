@@ -5,7 +5,7 @@
 \alias{freeport_flow}
 \title{Freeport Flow}
 \format{
-A list comprised of 6 lists (one for each scenario) that contain 2 vectors of 5843 elements:
+A list comprised of 2 vectors of 5477 elements:
 \describe{
   \item{Date}{calendar date}
   \item{Value}{flow (cfs) at Freeport}

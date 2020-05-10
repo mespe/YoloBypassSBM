@@ -7,7 +7,6 @@
 run_one_rep(
   water_year,
   chinook_run = c("Fall", "LateFall", "Spring", "Winter"),
-  scenario = c("Exg", "Alt01", "Alt04b", "Alt04", "Alt05", "Alt06"),
   sim_type = c("deterministic", "stochastic")
 )
 }
@@ -19,5 +18,5 @@ run_one_rep(
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }
 \description{
-Run one replicate of the model; a replicate is a water_year/chinook_run/scenario/sim_type combination
+Run one replicate of the model; a replicate is a water_year/chinook_run/sim_type combination
 }

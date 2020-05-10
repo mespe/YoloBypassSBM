@@ -4,17 +4,15 @@
 \alias{entrainment}
 \title{Fish entrainment at Fremont Weir}
 \usage{
-entrainment(model_day, abundance, scenario, sim_type)
+entrainment(model_day, abundance, sim_type)
 }
 \arguments{
 \item{model_day}{Day that cohort reaches Fremont Weir}
 
 \item{abundance}{Abundance of cohort at Fremont Weir}
 
-\item{scenario}{Scenario: Exg, Alt01, Alt04b, Alt04, Alt05, Alt06}
-
 \item{sim_type}{Simulation type: deterministic or stochastic}
 }
 \description{
-Draw random number of fish entrained at Fremont Weir based on scenario, model day, and abundance at Fremont Weir
+Draw random number of fish entrained at Fremont Weir based on model day and abundance at Fremont Weir
 }

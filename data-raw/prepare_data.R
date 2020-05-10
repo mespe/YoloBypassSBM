@@ -14,8 +14,6 @@ simulation_parameters <- list(name = "demo",
                               random_seed = 1,
                               water_years = 1997:2011,
                               chinook_runs = c("Fall", "LateFall", "Spring", "Winter"),
-                              scenarios = "Exg",
-                              # scenarios = c("Alt01", "Alt04b", "Alt04", "Alt05", "Alt06", "Exg"),
                               # ocean_year_probability describes probability of ocean survival being based on fork length relationship
                               ocean_year_probability = 1)
 usethis::use_data(simulation_parameters, overwrite = TRUE)
@@ -93,7 +91,8 @@ usethis::use_data(annual_abundance, overwrite = TRUE)
 
 # Flood duration ----------------------------------------------
 
-flood_duration <- readRDS("data-raw/FloodDuration.rds")
+fd <- read_csv("data-raw/FloodDuration.csv")
+flood_duration <- list(Date = fd$Date, Value = fd$FloodDuration)
 usethis::use_data(flood_duration, overwrite = TRUE)
 
 # Toe Drain temperature ----------------------------------------------
@@ -232,27 +231,17 @@ usethis::use_data(knights_landing_fl_params, overwrite = TRUE)
 
 # Freeport flow and Proportion entrained at Fremont Weir ----------------------------------------------
 
-flow_files <- list.files(path = "data-raw", pattern = "Flow", full.names = TRUE)
-fremont_weir_proportion <- list()
-freeport_flow <- list()
-for (i in flow_files){
-  scenario <-  gsub("data-raw/", "", gsub("Flow.csv", "", i))
-  temp <- read_csv(i)
-  fremont_weir_proportion[[scenario]] <- list(Date = temp$Date,
-                                              Value = temp$PropFremont)
-  freeport_flow[[scenario]] <- list(Date = temp$Date,
-                                    Value = temp$Freeport)
-}
+exg_flow <- read_csv(file.path("data-raw", "ExgFlow.csv")) %>%
+  filter(Date > ymd("1996-10-01") & Date < ymd("2011-10-01"))
+fremont_weir_proportion <- list(Date = exg_flow$Date, Value = exg_flow$PropFremont)
+freeport_flow <- list(Date = exg_flow$Date, Value = exg_flow$Freeport)
 usethis::use_data(fremont_weir_proportion, overwrite = TRUE)
 usethis::use_data(freeport_flow, overwrite = TRUE)
 
 # Inundated area ----------------------------------------------
 
-flooded <- read_csv("data-raw/Inundated_sqkm_long.csv")
-inundated_sqkm <- list()
-for (i in unique(flooded$Scenario)){
-  tmp <- filter(flooded, Scenario == i)
-  inundated_sqkm[[i]] <- list(Date = tmp$Date, Value = tmp$Inundated_sqkm)
-}
+flooded <- read_csv("data-raw/Inundated_sqkm_long.csv") %>%
+  filter(Scenario == "Exg" & Date < ymd("2011-10-01"))
+inundated_sqkm <- list(Date = flooded$Date, Value = flooded$Inundated_sqkm)
 usethis::use_data(inundated_sqkm, overwrite = TRUE)
 
