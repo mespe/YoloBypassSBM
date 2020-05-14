@@ -17,8 +17,8 @@ run_simulation <- function(cores = parallel::detectCores()){
   cat(params[["name"]], "\n")
 
   process_list <- function(input_list, col_name){
-    list("Sac" = dplyr::bind_rows(lapply(input_list, "[[", "Sac"), .id = col_name),
-         "Yolo" = dplyr::bind_rows(lapply(input_list, "[[", "Yolo"), .id = col_name))
+    list("Sac" = bind_rows(lapply(input_list, "[[", "Sac"), .id = col_name),
+         "Yolo" = bind_rows(lapply(input_list, "[[", "Yolo"), .id = col_name))
   }
 
     iters = expand.grid(params[["water_years"]],

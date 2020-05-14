@@ -9,9 +9,7 @@
 #'
 
 calculate_sar = function(sim_name) {
-  require(dplyr)
-  require(lubridate)
-
+  
   extracted_list <- extract_results(sim_name,
                                     sac_columns = c("Rep", "WaterYear", "Run", "CohortID",
                                                     "KnightsAbun", "KnightsDay", "AdultReturns"),

@@ -10,7 +10,6 @@
 #'
 
 summarise_quantiles = function (grouped_df, column) {
-  require(dplyr)
   grouped_df %>%
     summarise(Lwr = quantile(.data[[column]], probs = 0.025),
               Median = median(.data[[column]]),

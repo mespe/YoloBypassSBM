@@ -10,9 +10,7 @@
 #'
 
 calculate_sar_difference = function(sim_name) {
-  require(dplyr)
-  require(lubridate)
-
+  
   summary_helper <- function(gdf){
     gdf %>% # gdf = grouped data frame
       summarise(SacFremont = sum(SacFremont),

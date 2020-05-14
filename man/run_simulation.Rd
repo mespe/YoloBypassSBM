@@ -4,7 +4,7 @@
 \alias{run_simulation}
 \title{Run simulation}
 \usage{
-run_simulation()
+run_simulation(cores = parallel::detectCores())
 }
 \description{
 Run simulation based on simulation parameters. They typical workflow for running simulation is to reset_model_inputs(),

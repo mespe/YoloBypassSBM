@@ -11,8 +11,7 @@
 #'
 
 extract_results = function (sim_name, sac_columns, yolo_columns) {
-  require(dplyr)
-
+  
   file_names <- list.files(path = "results", pattern = sim_name, full.names = TRUE)
 
   extracted_list <- lapply(file_names,
