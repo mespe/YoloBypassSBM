@@ -22,13 +22,13 @@ rearing_time_delta <- function(model_day, passage_time, fork_length, sim_type){
   rt_fd <- exp(params[["inter"]] + params[["flow"]] * flow + params[["fork_length"]] * fork_length)
 
   if (sim_type == "stochastic"){
-    rt_fd <- sapply(rt_fd, function(rt) MASS::rnegbin(n = 1, mu = rt, theta = params[["theta"]]))
+    rt_fd <- sapply(rt_fd, function(rt) rnegbin(n = 1, mu = rt, theta = params[["theta"]]))
   }
 
   # subtracting passage time b/c relationship for rearing time includes passage and rearing
   rt_vals <- rt_fd - passage_time
-  rt_vals <- ifelse(rt_vals < 0, 0, rt_vals)
+  rt_vals[rt_vals < 0] = 0
 
-  mapply(function(md, dur) temperature_adjustment(md, dur, "Delta"), model_day, rt_vals)
+  mapply(temperature_adjustment, model_day, rt_vals, MoreArgs=list(location = "Delta"))
 }
 

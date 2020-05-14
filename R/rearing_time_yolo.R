@@ -26,6 +26,6 @@ rearing_time_yolo <- function(model_day, sim_type){
   rt_vals <- rt_fd - params[["passage_days"]]
   rt_vals <- ifelse(rt_vals < 0, 0, rt_vals)
 
-  mapply(function(md, dur) temperature_adjustment(md, dur, "Yolo"), model_day, rt_vals)
+    mapply(temperature_adjustment, model_day, rt_vals, MoreArgs = list(location = "Yolo"))
 }
 

@@ -50,7 +50,7 @@ temperature_adjustment <- function(model_day, duration, location){
     if (min(temps_sub) > thresh) return(0)
 
     # mininum of exceed_indices is first day that temp was over threshold in the max potential rearing period
-    exceed_indices <- which(temps_sub > thresh)
-    return(if(length(exceed_indices)) exceed_indices[1] else length(model_day:model_day_end))
+    exceed_indices <- temps_sub > thresh
+    return(if(any(exceed_indices)) which(exceed_indices)[1] else length(model_day:model_day_end))
 }
 
