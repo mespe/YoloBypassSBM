@@ -14,12 +14,13 @@ initial_cohort_fork_length <- function(model_day, chinook_run, sim_type){
 
   params = knights_landing_fl_params
 
-  if (sim_type == "stochastic") {
-    fork_length <- mapply(function(fl, sd) rlnorm(1, fl, sd),
-                          params[[chinook_run]][["MeanLog"]][model_day],
-                          params[[chinook_run]][["SDLog"]][model_day])
-  } else {
-    fork_length <- exp(params[[chinook_run]][["MeanLog"]][model_day])
-  }
-  fork_length
+    if (sim_type == "stochastic") {
+        #rlnorm is vectorized
+        rlnorm(length(params[[chinook_run]][["SDLog"]][model_day]),
+               params[[chinook_run]][["MeanLog"]][model_day],
+               params[[chinook_run]][["SDLog"]][model_day])
+        
+    } else {
+        exp(params[[chinook_run]][["MeanLog"]][model_day])
+    }
 }

@@ -20,8 +20,9 @@ entrainment <- function(model_day, abundance, sim_type){
   proportion <- fremont_weir_proportion[["Value"]][model_day]
 
   if (sim_type == "stochastic") {
-    entrained <- mapply(function(abun, prop) rbinom(n = 1, size = abun, prob = prop),
-                        round(abundance), proportion)
+      entrained <- rbinom(n = length(abundance),
+                          size = round(abundance),
+                          prob = proportion)
   } else {
     entrained <- proportion * abundance
   }

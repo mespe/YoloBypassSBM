@@ -26,10 +26,9 @@ ocean_survival <- function(abundance, fork_length,
   survival <- inv_logit(params[["inter"]] + params[["slope"]] * fork_length)
 
   if (sim_type == "stochastic") {
-    returning_adults <- mapply(function(abun, surv) VGAM::rbetabinom(1, size = abun, prob = surv, rho = params[["phi"]]),
-                               round(abundance), survival)
+      rbetabinom(length(abundance), size = round(abundance),
+                 prob = survival, rho = params[["phi"]])
   } else {
-    returning_adults <- survival * abundance
+      survival * abundance
   }
-  returning_adults
 }

@@ -20,12 +20,12 @@ rearing_abundance <- function(abundance, fork_length, sim_type){
   proportion <- logistic(fork_length, p[["max"]], p[["steepness"]], p[["inflection"]], p[["min"]])
 
   if (sim_type == "stochastic"){
-    rear_abun <- mapply(function(abun, prop) rbinom(n = 1, size = abun, prob = prop),
-                        round(abundance), proportion)
+      rbinom(n = length(proportion),
+             size = round(abundance),
+             prob = proportion)
   } else {
-    rear_abun <- abundance * proportion
+      abundance * proportion
   }
-  rear_abun
 }
 
 
