@@ -14,12 +14,13 @@
 rearing_growth <- function(wet_weight, model_day, duration, location){
   if(length(wet_weight) != length(model_day) || length(model_day) != length(duration))
     stop("wet_weight, model_day, and duration must be the same length")
-  helper <- function(md, md2){
-      mean(floodplain_temperature[[location]][["Value"]][md:md2])
-  }
-  
-  temp <- mapply(helper, model_day, model_day + duration)
+  fpt = floodplain_temperature[[location]][["Value"]]
+  temp <- mapply(helper, model_day, model_day + duration, MoreArgs = list(x = fpt))
 
   growth(wet_weight, temp, duration)
+}
+
+helper <- function(md, md2, x){
+    mean(x[md:md2])
 }
 
