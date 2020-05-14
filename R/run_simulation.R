@@ -33,9 +33,10 @@ run_simulation <- function(cores = parallel::detectCores()){
                       sim_type = params[["sim_type"]]))
         names(run_list) = iters[,2]
         ## Summerize each water year
-        wy_list = sapply(params[["water_years"]], function(wy){
+        wy_list = lapply(params[["water_years"]], function(wy){
             process_list(run_list[iters[,1] == wy], "Run")
-        }, simplify = FALSE, USE.NAMES = TRUE)
+        })
+        names(wy_list) = params[["water_years"]]
                 
         process_list(wy_list, "WaterYear")
     # carriage return, \r, allows for rewriting on same line
