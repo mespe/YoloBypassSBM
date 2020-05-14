@@ -21,20 +21,23 @@ run_simulation <- function(){
          "Yolo" = dplyr::bind_rows(lapply(input_list, "[[", "Yolo"), .id = col_name))
   }
 
+    iters = expand.grid(params[["water_years"]],
+                        params[["chinook_runs"]], stringsAsFactors = FALSE)
   # keeping Sac and Yolo separate because different number of columns
   rep_list <- list()
-  for (i in params[["reps"]]){
-    wy_list <- list()
-    for (j in params[["water_years"]]){
-      run_list <- list()
-      for (k in params[["chinook_runs"]]){
-        run_list[[k]] <- run_one_rep(water_year = j,
-                                     chinook_run = k,
-                                     sim_type = params[["sim_type"]])
-      }
-      wy_list[[as.character(j)]] <- process_list(run_list, "Run")
-    }
-    rep_list[[as.character(i)]] <- process_list(wy_list, "WaterYear")
+    for (i in params[["reps"]]){
+        ## This part is done in a loop
+        run_list = lapply(seq(nrow(iters)), function(i)
+          run_one_rep(water_year = iters[i,1],
+                      chinook_run = iters[i,2],
+                      sim_type = params[["sim_type"]]))
+
+        ## Summerize each water year
+        wy_list = sapply(params[["water_years"]], function(wy){
+            process_list(run_list[iters[,1] == wy], "Run")
+        }, simplify = FALSE, USE.NAMES = TRUE)
+                
+        rep_list[[as.character(i)]] <- process_list(wy_list, "WaterYear")
     # carriage return, \r, allows for rewriting on same line
     cat("\r", "Rep", i, "of", max(params[["reps"]]))
   }

@@ -7,12 +7,13 @@ simulation_parameters$name = git_hash
 
 # For profiling
 Rprof(file.path("prof", paste0(git_hash,".out")))
-cat(git_hash, "\t", system.time({run_simulation()}), file= "timings", append=TRUE)
+cat(git_hash, "\t", system.time({run_simulation()}),"\n",
+    file= "timings", append=TRUE)
 Rprof(NULL)
 
 ## Test
 a = readRDS(file.path("results", "baseline-Reps-1-100.rds"))
 b = readRDS(file.path("results", paste0(git_hash, "-Reps-1-100.rds")))
 
-identical(a,b)
+all.equal(a,b)
 
