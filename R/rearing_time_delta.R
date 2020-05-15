@@ -14,8 +14,8 @@
 
 rearing_time_delta <- function(model_day, passage_time, fork_length, sim_type){
 
-  if(length(model_day) != length(passage_time) || length(passage_time) != length(fork_length))
-    stop("model_day, passage_time, and fork_length must be the same length")
+  # if(length(model_day) != length(passage_time) || length(passage_time) != length(fork_length))
+  #   stop("model_day, passage_time, and fork_length must be the same length")
 
   params = rearing_time_parameters[["Delta"]]
   flow <- freeport_flow[["Value"]][model_day]

@@ -13,7 +13,7 @@
 run_simulation <- function(params, cores = parallel::detectCores(), write_results = TRUE){
 
   set.seed(params[["random_seed"]])
-  cat(params[["name"]], "\n")
+  # cat(params[["name"]], "\n")
 
   process_list <- function(input_list, col_name){
     list("Sac" = bind_rows(lapply(input_list, "[[", "Sac"), .id = col_name),

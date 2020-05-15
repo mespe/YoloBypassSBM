@@ -15,10 +15,10 @@
 ocean_survival <- function(abundance, fork_length,
                            ocean_year_type = c("length", "intercept"), sim_type){
 
-  ocean_year_type = match.arg(ocean_year_type)
-
-  if(length(fork_length) != length(abundance))
-    stop("fork_length and abundance must be the same length")
+  # ocean_year_type = match.arg(ocean_year_type)
+  #
+  # if(length(fork_length) != length(abundance))
+  #   stop("fork_length and abundance must be the same length")
 
   # slope = 0 in parameters for intercept-only model
   params <- ocean_survival_parameters[[ocean_year_type]]

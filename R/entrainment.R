@@ -14,8 +14,8 @@
 
 entrainment <- function(model_day, abundance, sim_type){
 
-  if(length(model_day) != length(abundance))
-    stop("model_day and abundance must be the same length")
+  # if(length(model_day) != length(abundance))
+  #   stop("model_day and abundance must be the same length")
 
   proportion <- fremont_weir_proportion[["Value"]][model_day]
 

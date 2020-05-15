@@ -14,8 +14,8 @@
 #'
 
 growth <- function(wet_weight, temp, duration){
-  if(length(wet_weight) != length(temp) || length(temp) != length(duration))
-    stop("wet_weight, temp, and duration must be the same length")
+  # if(length(wet_weight) != length(temp) || length(temp) != length(duration))
+  #   stop("wet_weight, temp, and duration must be the same length")
 
   p <- growth_parameters
   omega <- p[["d"]] * (temp - p[["TL"]]) * (1 - exp(p[["g"]] * (temp - p[["TU"]])))

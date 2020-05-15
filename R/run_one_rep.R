@@ -16,15 +16,15 @@
 run_one_rep <- function(water_year, chinook_run = c("Fall", "LateFall", "Spring", "Winter"),
                         sim_type = c("deterministic", "stochastic")){
 
-  chinook_run <- match.arg(chinook_run)
-  sim_type <- match.arg(sim_type)
-
-  wy_all <- annual_abundance[["WaterYear"]]
-  if (!(water_year %in% wy_all))
-    stop(paste("water_year must be between", min(wy_all), "and", max(wy_all)))
-
-  if (length(water_year) > 1)
-    stop("water_year must have length = 1")
+  # chinook_run <- match.arg(chinook_run)
+  # sim_type <- match.arg(sim_type)
+  #
+  # wy_all <- annual_abundance[["WaterYear"]]
+  # if (!(water_year %in% wy_all))
+  #   stop(paste("water_year must be between", min(wy_all), "and", max(wy_all)))
+  #
+  # if (length(water_year) > 1)
+  #   stop("water_year must have length = 1")
 
   ocean_year_type <- ifelse(runif(1) < simulation_parameters[["ocean_year_probability"]],
                             "length", "intercept")
