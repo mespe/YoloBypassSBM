@@ -15,10 +15,10 @@
 
 passage <- function(model_day, abundance, fork_length, route = c("Sac", "Yolo"), sim_type){
 
-  route <- match.arg(route)
-
-  if(length(model_day) != length(abundance) || length(abundance) != length(fork_length))
-    stop("model_day, abundance, and fork_length must be the same length")
+  # route <- match.arg(route)
+  #
+  # if(length(model_day) != length(abundance) || length(abundance) != length(fork_length))
+  #   stop("model_day, abundance, and fork_length must be the same length")
 
   flow <- freeport_flow[["Value"]][model_day]
   list("Abundance" = passage_survival(abundance, fork_length, flow, route, sim_type),

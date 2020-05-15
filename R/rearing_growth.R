@@ -12,8 +12,8 @@
 #'
 
 rearing_growth <- function(wet_weight, model_day, duration, location){
-  if(length(wet_weight) != length(model_day) || length(model_day) != length(duration))
-    stop("wet_weight, model_day, and duration must be the same length")
+  # if(length(wet_weight) != length(model_day) || length(model_day) != length(duration))
+  #   stop("wet_weight, model_day, and duration must be the same length")
 
   helper <- function(md, dur){
     mean(floodplain_temperature[[location]][["Value"]][md:(md + dur)])

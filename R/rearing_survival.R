@@ -13,7 +13,7 @@
 #'
 
 rearing_survival <- function(model_day, abundance, duration, location = c("Delta", "Yolo"), sim_type){
-  location <- match.arg(location)
+  # location <- match.arg(location)
 
   p <- rearing_survival_parameters[[location]]
 

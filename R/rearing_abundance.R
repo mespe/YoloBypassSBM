@@ -13,8 +13,8 @@
 
 rearing_abundance <- function(abundance, fork_length, sim_type){
 
-  if(length(abundance) != length(fork_length))
-    stop("abundance and fork_length must be the same length")
+  # if(length(abundance) != length(fork_length))
+  #   stop("abundance and fork_length must be the same length")
 
   p <- rearing_proportion_parameters
   proportion <- logistic(fork_length, p[["max"]], p[["steepness"]], p[["inflection"]], p[["min"]])
