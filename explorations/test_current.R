@@ -7,7 +7,7 @@ simulation_parameters$name = git_hash
 
 # For profiling
 Rprof(file.path("prof", paste0(git_hash,".out")))
-cat(git_hash, "\t", system.time({run_simulation(simulation_parameters)}),"\n",
+cat(git_hash, "\t", system.time({run_simulation()}),"\n",
     file= "timings", append=TRUE)
 Rprof(NULL)
 

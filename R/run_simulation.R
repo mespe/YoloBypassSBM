@@ -10,9 +10,9 @@
 #'
 
 
-run_simulation <- function(params, cores = parallel::detectCores(), write_results = TRUE){
-
-  set.seed(params[["random_seed"]])
+run_simulation <- function( cores = parallel::detectCores(), write_results = TRUE){
+    params <- simulation_parameters
+    set.seed(params[["random_seed"]])
   # cat(params[["name"]], "\n")
 
   process_list <- function(input_list, col_name){
@@ -39,7 +39,7 @@ run_simulation <- function(params, cores = parallel::detectCores(), write_result
                 
         process_list(wy_list, "WaterYear")
     # carriage return, \r, allows for rewriting on same line
-        if(cores == 1) cat("\r", "Rep", i, "of", max(params[["reps"]]))
+        # if(cores == 1) cat("\r", "Rep", i, "of", max(params[["reps"]]))
     }, mc.cores = cores)
   cat("\n")  # expectation is that cursor will generally be placed on next line, but this is insurance
   if (!dir.exists("results")) dir.create("results")
